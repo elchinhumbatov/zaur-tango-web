@@ -11,7 +11,7 @@ export default function Home() {
         layout="stretch"
         objectFit="cover"
       />
-      <p className="text-xl md:text-2xl tracking-[12px]">COMING SOON...</p>
+      <p className="text-sm md:text-2xl tracking-[10px]">COMING SOON...</p>
     </div>
   );
 }
