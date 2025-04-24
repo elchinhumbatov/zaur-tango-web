@@ -1,11 +1,22 @@
-import type { Metadata } from "next";
-import { Fragment_Mono } from "next/font/google";
 import "./globals.css";
+import type { Metadata } from "next";
+import { Quicksand } from "next/font/google";
 
-const monoFont = Fragment_Mono({
+import { Providers } from "@/providers/providers";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+
+
+// const monoFont = Fragment_Mono({
+//   variable: "--font-family",
+//   weight: ['400'],
+//   style: ['normal', 'italic'],
+//   subsets: ['latin'],
+// })
+const quicksand = Quicksand({
   variable: "--font-family",
-  weight: ['400'],
-  style: ['normal', 'italic'],
+  weight: ['500'],
+  style: ['normal'],
   subsets: ['latin'],
 })
 
@@ -22,9 +33,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${monoFont.variable} antialiased`}
+        className={`${quicksand.variable} antialiased`}
       >
-        {children}
+        <Providers>
+          <Navbar />
+          <div className="pt-[64px]">{children}</div>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

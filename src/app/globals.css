@@ -1,4 +1,7 @@
-@import "tailwindcss";
+/* @import "tailwindcss"; */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background: #faf3e4;
@@ -22,5 +25,6 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Fragment Mono', monospace;
+  /* font-family: 'Fragment Mono', monospace; */
+  font-family: 'Quicksand';
 }
