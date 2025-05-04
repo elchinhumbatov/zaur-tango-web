@@ -32,8 +32,9 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-6 order-4 md:order-2">
           {links.map(link => (
-            <Link key={link.path} href={link.path} className="text-gray-700 hover:text-gray-900">
+            <Link key={link.path} href={link.path} className="group uppercase active text-sm">
               {link.name}
+              <div className="bg-black h-[1px] w-0 group-hover:w-full transition-all duration-400"></div>
             </Link>
           ))}
         </div>
@@ -43,7 +44,7 @@ const Navbar = () => {
           {/* <button className="p-2 bg-gray-200 rounded"><Moon /></button> Theme Switcher */}
 
           {isLoggedIn ? (
-            <Dropdown>
+            <Dropdown className="bg-amber-50">
               <DropdownTrigger>
                 <Button color='default' variant='light' size='sm'>
                   <User />
@@ -87,7 +88,7 @@ const Navbar = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -40 }}
                 transition={{ duration: 0.3 }}
-                className="absolute top-[72px] left-0 w-full bg-white shadow-md md:hidden p-4 z-50"
+                className="absolute top-[72px] left-0 w-full bg-amber-50 shadow-md md:hidden p-4 z-50"
               >
                 {links.map(link => (
                   <Link key={link.path} href={link.path} className="block text-gray-700 hover:text-gray-900 py-2">

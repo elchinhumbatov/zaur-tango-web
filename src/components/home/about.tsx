@@ -2,7 +2,7 @@ import React from 'react'
 import SectionTitle from './title'
 import Image from 'next/image'
 
-export default function About() {
+export default function HomeAbout() {
   return (
     <section className='py-10 px-5'>
       <div className='container mx-auto'>

@@ -4,7 +4,7 @@ import {Card, CardHeader, Image, CardBody} from "@heroui/react";
 import SectionTitle from "./title";
 
 
-export default function Products() {
+export default function HomeProducts() {
   return (
     <section className="py-10 px-5">
       <div className="container mx-auto">

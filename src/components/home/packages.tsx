@@ -9,7 +9,7 @@ const packages = [
   // {id: 4, name: "Mega all together", lessons: 46, price: 299},
 ]
 
-export default function Packages() {
+export default function HomePackages() {
   return (
     <section className='py-10 px-5'>
       <div className='container mx-auto'>
