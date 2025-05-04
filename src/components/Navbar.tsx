@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { AlignLeft, X, User } from "lucide-react";
@@ -57,7 +57,7 @@ const Navbar = () => {
                 <DropdownItem key="settings">
                   <Link href="/settings">Settings</Link>
                 </DropdownItem>
-                <DropdownItem key="logout">
+                <DropdownItem key="logout" onPress={() => setIsLoggedIn(false)}>
                   Logout
                 </DropdownItem>
               </DropdownMenu>
