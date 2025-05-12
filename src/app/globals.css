@@ -53,3 +53,7 @@ body {
   /* font-family: 'Fragment Mono', monospace; */
   font-family: 'Qanelas', sans-serif;
 }
+
+.container {
+  margin: 0 auto;
+}

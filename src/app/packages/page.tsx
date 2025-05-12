@@ -38,22 +38,21 @@ export default function Packages() {
               alt={pkg.title}
               width={400}
               height={260}
-              className="w-full h-40 object-cover mb-4"
+              className="w-full object-cover mb-4"
             />
             <h3 className="text-xl font-semibold mb-2">{pkg.title}</h3>
             <p className="text-gray-600 mb-4">{pkg.description}</p>
             <p className="text-lg font-bold mb-4">{pkg.price}</p>
-            <div className="flex flex-col gap-3 justify-between">
-              <Link href={`/packages/${pkg.title.toLowerCase().replace(/\s+/g, "-")}`}>
-                <Button
-                  className="rounded-none w-full"
-                  // onPress={() => console.log(`Viewing details for ${pkg.title}`)}
-                >
-                  See Details
-                </Button>
+            <div className="flex flex-row items-center justify-between gap-3">
+              <Link 
+                href={`/packages/${pkg.title.toLowerCase().replace(/\s+/g, "-")}`} 
+                className="text-xs uppercase underline underline-offset-[6px] hover:no-underline"
+              >
+                See Details
               </Link>
               <Button
-                className="rounded-none"
+                variant="solid"
+                className="bg-gray-600 text-amber-50 rounded-none"
                 // onPress={() => console.log(`Subscribing to ${pkg.title}`)}
               >
                 Subscribe
