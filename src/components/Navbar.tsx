@@ -3,21 +3,22 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { AlignLeft, X, User } from "lucide-react";
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@heroui/react";
+import { Button, Spinner } from "@heroui/react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useAuthStore } from "@/store/authStore";
 
 const links = [
   { name: "Home", path: "/" },
-  { name: "Packages", path: "/packages" },
+  { name: "Courses", path: "/courses" },
   { name: "About", path: "/about" },
   { name: "Products", path: "/products" },
   { name: "Contact", path: "/contact" },
 ];
 
 const Navbar = () => {
-  // const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Temporary state for auth
+  const { user, loading } = useAuthStore();
+
 
   return (
     <>
@@ -39,33 +40,40 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* Account & Theme Switcher */}
+        {/* Account */}
         <div className="flex items-center space-x-2 order-3 md:order-3">
-          {/* <button className="p-2 bg-gray-200 rounded"><Moon /></button> Theme Switcher */}
-
-          {isLoggedIn ? (
-            <Dropdown className="bg-amber-50">
-              <DropdownTrigger>
-                <Button color='default' variant='light' size='sm'>
-                  <User />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu aria-label="Static Actions">
-                <DropdownItem key="profile">
-                  <Link href="/profile">Profile</Link>
-                </DropdownItem>
-                <DropdownItem key="settings">
-                  <Link href="/settings">Settings</Link>
-                </DropdownItem>
-                <DropdownItem key="logout" onPress={() => setIsLoggedIn(false)}>
-                  Logout
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          ) : (
+          {loading ?  
             <Button color='default' variant='light' size='sm'>
-              <Link href="/login"><User /></Link>
-            </Button>
+              <Spinner color="default" size="sm" />
+            </Button> 
+          : (
+            <Link href={user ? '/profile' : '/login'}>
+              <Button color='default' variant='light' size='sm'>
+                <User />
+              </Button>
+            </Link>
+          //   <Dropdown className="bg-amber-50">
+          //     <DropdownTrigger>
+          //       <Button color='default' variant='light' size='sm'>
+          //         <User />
+          //       </Button>
+          //     </DropdownTrigger>
+          //     <DropdownMenu aria-label="Static Actions">
+          //       <DropdownItem key="profile">
+          //         <Link className="inline-block w-full" href="/profile">Profile</Link>
+          //       </DropdownItem>
+          //       {/* <DropdownItem key="settings">
+          //         <Link className="inline-block w-full" href="/profile/settings">Settings</Link>
+          //       </DropdownItem> */}
+          //       <DropdownItem key="logout" onPress={logout}>
+          //         Logout
+          //       </DropdownItem>
+          //     </DropdownMenu>
+          //   </Dropdown>
+          // ) : (
+          //   <Button color='default' variant='light' size='sm'>
+          //     <Link href="/login"><User /></Link>
+          //   </Button>
           )}
         </div>
 

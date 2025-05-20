@@ -1,6 +1,10 @@
+'use client'
 import React from 'react'
-import {Card, CardHeader, CardBody, Image} from "@heroui/react";
+import {Card, CardHeader, CardBody, Image, Button} from "@heroui/react";
 import SectionTitle from './title';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/store/authStore';
 
 const packages = [
   {id: 1, name: "Beginner pack", lessons: 12, price: 49},
@@ -9,15 +13,26 @@ const packages = [
   // {id: 4, name: "Mega all together", lessons: 46, price: 299},
 ]
 
-export default function HomePackages() {
+export default function HomeCourses() {
+  const { user } = useAuthStore();
+  const router = useRouter();
+
+  const handleSubscribe = () => {
+    if (user) {
+      router.push('/checkout');
+    } else {
+      router.push('/login');
+    }
+  }
+
   return (
     <section className='py-10 px-5'>
       <div className='container mx-auto'>
         <SectionTitle 
-          heading='Packages' 
-          subheading='Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quod, molestias quisquam, blanditiis cum dolores eius a reiciendis dolore fuga laudantium libero. Culpa ab corrupti ipsum.'
-          url='/packages'
-          btnTitle='See all packages'
+          heading='Courses' 
+          subheading="Hi, I'm Zaur, and I want to take you on a journey-one that goes beyond dance. This is about discovering yourself, your body, and your mind through the art of Argentine tango."
+          url='/courses'
+          btnTitle='See all courses'
         />
         <div className='flex gap-4 flex-wrap justify-center align-center'>
           {packages.map(pack => (
@@ -35,6 +50,21 @@ export default function HomePackages() {
                     src="https://heroui.com/images/hero-card-complete.jpeg"
                     width={270}
                   />
+                  <div className="flex flex-row items-center justify-between gap-3 mt-4">
+                    <Link
+                      href={`/courses/${pack.name.toLowerCase().replace(/\s+/g, "-")}`} 
+                      className="text-xs uppercase underline underline-offset-[6px] hover:no-underline"
+                    >
+                      See Details
+                    </Link>
+                    <Button
+                      variant="solid"
+                      className="bg-gray-800 text-amber-50 rounded-none"
+                      onPress={() => handleSubscribe()}
+                    >
+                      Subscribe
+                    </Button>
+                  </div>
                 </CardBody>
               </Card>
             </div>
