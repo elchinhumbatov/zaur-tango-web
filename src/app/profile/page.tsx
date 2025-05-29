@@ -8,26 +8,12 @@ import { Tooltip, useDisclosure } from "@heroui/react";
 import withAuth from "@/hocs/withAuth";
 import { useAuthStore } from "@/store/authStore";
 import ProfileSettingsModal from "@/components/ProfileSettingsModal";
+import { User } from "../types";
 
-export type User = {
-  uid: string;
-  fullName: string | null;
-  email: string | null;
-  phone: string | null;
-  subscriptions: string[] | [];
-  createdAt: string | null;
-};
 
 const Profile = () => {
   const { user, loading: loadingUser } = useAuthStore();
-  const [userData, setUserData] = useState<User>({
-    uid: "",
-    fullName: null,
-    email: null,
-    phone: null,
-    subscriptions: [],
-    createdAt: null,
-  });
+  const [userData, setUserData] = useState<User>({} as User);
   const [loading, setLoading] = useState(true);
   const {isOpen, onOpen, onOpenChange, onClose} = useDisclosure();
 
@@ -85,9 +71,9 @@ const Profile = () => {
         <h3 className="text-xl font-semibold mb-3">Purchased Courses</h3>
         {userData?.subscriptions?.length > 0 ? (
           <ul className="space-y-2">
-            {userData.subscriptions.map((sub: string, idx: number) => (
+            {userData.subscriptions.map((sub, idx: number) => (
               <li key={idx} className="bg-gray-100 p-3 rounded text-gray-800">
-                {sub}
+                {sub?.courseId}
               </li>
             ))}
           </ul>

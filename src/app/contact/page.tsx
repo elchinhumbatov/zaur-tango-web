@@ -67,7 +67,7 @@ export default function ContactPage() {
               By sending your message, you agree to accept the General Terms and Conditions of Use and that your data will be processed in compliance with the Privacy Policy of Zaur Tango.
             </p>
             <div className='w-full md:w-1/2 flex justify-end'>
-              <Button type="submit" variant="bordered" radius='none' className="w-full md:w-[200px]">
+              <Button type="submit" variant="bordered" radius='none' className="w-full md:w-[200px] text-gray-500">
                 Submit
               </Button>
             </div>
