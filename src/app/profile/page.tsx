@@ -1,40 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { db } from "@/lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { useEffect } from "react";
 import { BadgeCheck, BadgeX, Settings } from "lucide-react";
 import { Tooltip, useDisclosure } from "@heroui/react";
 import withAuth from "@/hocs/withAuth";
 import { useAuthStore } from "@/store/authStore";
 import ProfileSettingsModal from "@/components/ProfileSettingsModal";
-import { User } from "../types";
 
 
 const Profile = () => {
-  const { user, loading: loadingUser } = useAuthStore();
-  const [userData, setUserData] = useState<User>({} as User);
-  const [loading, setLoading] = useState(true);
+  const { user, userData, loading, syncUserData } = useAuthStore();
   const {isOpen, onOpen, onOpenChange, onClose} = useDisclosure();
 
 
   useEffect(() => {
     const fetchUserData = async () => {
-      if (user && !loadingUser) {
-        const userDocRef = doc(db, "users", user.uid);
-        const docSnap = await getDoc(userDocRef);
-
-        if (docSnap.exists()) {
-          setUserData(docSnap.data() as User);
-          console.log(docSnap.data());
-        }
-
-        setLoading(false);
-      }
+      await syncUserData();
     };
 
     fetchUserData();
-  }, [user, loadingUser]);
+  });
 
   if (loading) return <p className="text-center py-10">Loading...</p>;
 
@@ -43,10 +28,10 @@ const Profile = () => {
       <div className="flex items-start justify-between mb-6">
         <div>
           <h2 className="text-2xl font-bold">
-            Welcome, {userData.fullName || "User"}!
+            Welcome, {userData?.fullName || "User"}!
           </h2>
           <div className="flex items-center space-x-2 mt-2">
-            <p className="text-gray-600 text-sm">{userData.email}</p>
+            <p className="text-gray-600 text-sm">{userData?.email}</p>
             <div>
               {user?.emailVerified ? (
                 <BadgeCheck size={15} color="green" />
@@ -69,11 +54,13 @@ const Profile = () => {
 
       <div>
         <h3 className="text-xl font-semibold mb-3">Purchased Courses</h3>
-        {userData?.subscriptions?.length > 0 ? (
+        {userData?.subscriptions ? (
           <ul className="space-y-2">
-            {userData.subscriptions.map((sub, idx: number) => (
-              <li key={idx} className="bg-gray-100 p-3 rounded text-gray-800">
-                {sub?.courseId}
+            {Object.entries(userData.subscriptions).map(([key, value]) => (
+              <li key={key} className="bg-gray-100 p-3 rounded text-gray-800">
+                <p>Pack Name: {value?.title}</p>
+                <p>Subscribe At: {value?.subscribeAt}</p>
+                <p>Subscribtion ends at: {value?.subscribeAt}</p>
               </li>
             ))}
           </ul>
@@ -84,7 +71,11 @@ const Profile = () => {
         )}
       </div>
 
-      {isOpen && <ProfileSettingsModal isOpen={isOpen} onOpenChange={onOpenChange} onClose={onClose} userData={userData} setUserData={setUserData} />}
+      {isOpen && <ProfileSettingsModal 
+                    isOpen={isOpen} 
+                    onOpenChange={onOpenChange} 
+                    onClose={onClose} 
+                  />}
     </div>
   );
 };

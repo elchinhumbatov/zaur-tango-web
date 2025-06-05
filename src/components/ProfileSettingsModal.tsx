@@ -8,7 +8,6 @@ import {
   Button,
   Input,
 } from "@heroui/react";
-import { User } from "@/app/profile/page";
 import { useState } from "react";
 import {
   sendEmailVerification,
@@ -23,20 +22,16 @@ export default function ProfileSettingsModal({
   isOpen,
   onOpenChange,
   onClose,
-  userData,
-  setUserData,
 }: {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   onClose: () => void;
-  userData: User;
-  setUserData: (userData: User) => void;
 }) {
-  const [fullName, setFullName] = useState(userData.fullName || "");
-  const [email, setEmail] = useState(userData.email || "");
-  const [phone, setPhone] = useState(userData.phone || "");
+  const { user, userData, logout, syncUserData, deleteUser } = useAuthStore();
+  const [fullName, setFullName] = useState(userData?.fullName || "");
+  const [email, setEmail] = useState(userData?.email || "");
+  const [phone, setPhone] = useState(userData?.phone || "");
   const [msg, setMsg] = useState("");
-  const { user, logout } = useAuthStore();
 
   const handleChanges = async () => {
     try {
@@ -57,7 +52,7 @@ export default function ProfileSettingsModal({
           ]);
         }
 
-        if (phone && phone !== userData.phone) {
+        if (phone && phone !== userData?.phone) {
           await updateDoc(userRef, { phone });
         }
 
@@ -65,12 +60,8 @@ export default function ProfileSettingsModal({
         //   await updatePassword(user, password);
         // }
 
-        setUserData({
-          ...userData,
-          fullName: fullName,
-          email: email,
-          phone: phone,
-        });
+        await syncUserData();
+
         setMsg("Profile updated successfully!");
         setTimeout(() => {
           onClose();
@@ -122,6 +113,7 @@ export default function ProfileSettingsModal({
 
   const handleLogout = async () => {
     try {
+      await deleteUser();
       await logout();
     } catch (error: unknown) {
       if (error instanceof Error) {

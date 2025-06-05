@@ -46,7 +46,8 @@ function Signup() {
         uid: user.uid,
         fullName: fullName,
         email: user.email,
-        subscriptions: [],
+        phone: "",
+        subscriptions: null,
         createdAt: new Date().toISOString(),
       });
 

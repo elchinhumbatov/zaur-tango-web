@@ -10,11 +10,12 @@ import { CourseProps } from "@/app/types";
 import useCoursesStore from "@/store/coursesStore";
 import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
+import s from "./course.module.css";
 
 export default function CourseComponent() {
   const [courseData, setCourseData] = useState({} as CourseProps | undefined);
   const [loadingCourses, setLoadingCourses] = useState(true);
-  const { user } = useAuthStore();
+  const { user, userData } = useAuthStore();
   const router = useRouter();
   const params = useParams();
   const { getCourse } = useCoursesStore();
@@ -24,6 +25,8 @@ export default function CourseComponent() {
   ).toString("ascii");
 
   useEffect(() => {
+    // console.log(user)
+    // console.log(user.subscriptions)
     const fetchCourse = async () => {
       try {
         const course = await getCourse(params?.slug as string);
@@ -112,9 +115,15 @@ export default function CourseComponent() {
                   aria-label={`Accordion ${index + 1}`}
                   title={video?.title}
                 >
-                  <p>{video?.description}</p>
-                  <p>Duration: {video?.duration} minutes</p>
-                  {user && (
+                  {/* <p>{video?.description}</p> */}
+                  <p
+                    className={`mb-8 text-gray-600 ${s.accordionItem}`}
+                    dangerouslySetInnerHTML={{
+                      __html: video?.description || "",
+                    }}
+                  ></p>
+                  {/* <p>Duration: {video?.duration} minutes</p> */}
+                  {user && userData && userData?.subscriptions && (
                     <Player
                       token={handleTokenGeneration(video.url)}
                       playbackId={video.url}

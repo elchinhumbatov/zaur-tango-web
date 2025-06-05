@@ -15,17 +15,33 @@ export type Video = {
   duration: number;
 };
 
-export type User = {
+export type UserData = {
   uid: string;
   fullName: string | null;
   email: string | null;
   phone: string | null;
-  subscriptions: Subscriptions[] | [];
+  subscriptions: Subscriptions | null;
   createdAt: string | null;
 };
 
 export type Subscriptions = {
-  courseId: string | null;
-  subscribedAt: string | null;
-  subscribtionEnds: string | null;
+  beginner?: BeginnerSubscription;
+  intermediate?: IntermediateSubscription;
+  advance?: AdvanceSubscription;
+};
+
+type BeginnerSubscription = {
+  title: string;
+  subscribeAt: string;
+  expiresAt: string;
+};
+type IntermediateSubscription = {
+  title: string;
+  subscribeAt: string;
+  expiresAt: string;
+};
+type AdvanceSubscription = {
+  title: string;
+  subscribeAt: string;
+  expiresAt: string;
 };

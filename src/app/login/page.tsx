@@ -8,7 +8,7 @@ import Link from "next/link";
 const LoginPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const login = useAuthStore((state) => state.login);
+  const { syncUserData, login } = useAuthStore();
   const router = useRouter();
 
   const handleLogin = async (
@@ -20,6 +20,13 @@ const LoginPage = () => {
     setLoading(true);
     try {
       await login(email, password);
+      await syncUserData()
+
+    // const unsub = onSnapshot(doc(db, "cities", "SF"), (doc) => {
+    //   const source = doc.metadata.hasPendingWrites ? "Local" : "Server";
+    //   console.log(source, " data: ", doc.data());
+    // });
+      // console.log(user)
       router.push("/profile");
     } catch (err: unknown) {
       if (err instanceof Error) {

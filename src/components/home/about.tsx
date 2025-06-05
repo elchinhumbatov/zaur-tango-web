@@ -1,32 +1,42 @@
-import React from 'react'
-import SectionTitle from './title'
-import Image from 'next/image'
+import React from "react";
+import SectionTitle from "./title";
+import Image from "next/image";
 
 export default function HomeAbout() {
   return (
-    <section className='py-10 px-5'>
-      <div className='container mx-auto'>
-        <SectionTitle
-          heading='About us'
-          subheading='Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.'
-          url='/about'
-          btnTitle='Read more'
+    <section className="mt-10">
+      <div className="relative h-[100vh] w-full">
+        <Image
+          alt="About"
+          className="object-cover absolute left-0 top-0 w-[100vw] h-[100vh]"
+          src="/img/tree.jpg"
+          width={5000}
+          height={800}
         />
-        <div className='flex gap-4 flex-wrap justify-around items-center'>
-          <Image
-            alt="About"
-            className="object-cover rounded-xl"
-            src="https://heroui.com/images/hero-card-complete.jpeg"
-            width={470}
-            height={880}
-          />
-          <div className='w-full md:w-1/4'>
-            <p className='text-default-500 leading-8'>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatibus cupiditate quo nihil dolorem adipisci inventore earum, architecto vel unde perferendis quos numquam asperiores quod ad quae, repellendus necessitatibus maiores officiis.
+      </div>
+      <div className="mx-auto py-10 px-5">
+        <SectionTitle
+          heading="About Me"
+          subheading="My name is Zaur, and my journey to dance was far from easy."
+          url="/about"
+          btnTitle="Read more"
+        />
+        <div>
+          <div className="w-full lg:w-1/2 m-auto">
+            <p className="text-default-500 leading-8">
+              When I teach dance, I pass on not just techniques and steps. I
+              share a life experience — the experience of interacting with
+              oneself on a deep level — when body and spirit work as one, when
+              fears transform into strength, and limitations become starting
+              points for growth. My method is built on an understanding of
+              psychosomatic processes — I help each person find their rhythm,
+              open their breath, and learn to listen to themselves. Just as
+              dance once helped me find freedom, now it helps others open up and
+              feel life to the fullest.
             </p>
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }
