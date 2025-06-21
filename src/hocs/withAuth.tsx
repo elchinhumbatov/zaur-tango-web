@@ -3,8 +3,8 @@ import React, { useEffect } from "react";
 import { useAuthStore } from "@/store/authStore";
 import { useRouter } from "next/navigation";
 
-export default function withAuth<P extends object>(WrappedComponent: React.ComponentType<P>) {
-  return function AuthenticatedComponent(props: P) {
+export default function withAuth<T extends object>(WrappedComponent: React.ComponentType<T>) {
+  return function AuthenticatedComponent(props: T) {
     const { user, loading } = useAuthStore();
     const router = useRouter();
 
@@ -18,6 +18,6 @@ export default function withAuth<P extends object>(WrappedComponent: React.Compo
       return <div className="flex items-center justify-center h-screen">Loading...</div>;
     }
 
-    return <WrappedComponent {...(props as P)} />;
+    return <WrappedComponent {...props} />;
   };
 }

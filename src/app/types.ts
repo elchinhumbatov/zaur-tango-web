@@ -1,9 +1,13 @@
+import { DocumentData } from "firebase/firestore";
+
 export type CourseProps = {
   id: string;
   title: string;
   description: string;
   imageUrl: string;
   price: number;
+  priceId: string;
+  url: string;
   duration: number;
   videos: Video[];
 };
@@ -23,6 +27,14 @@ export type UserData = {
   subscriptions: Subscriptions | null;
   createdAt: string | null;
 };
+
+export interface StripeSubscription extends DocumentData {
+  id: string;
+  product?: {
+    id: string;
+  };
+  [key: string]: unknown;
+}
 
 export type Subscriptions = {
   beginner?: BeginnerSubscription;

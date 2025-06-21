@@ -1,21 +1,36 @@
 'use client';
 import React, { useEffect, useState } from "react";
-import {Card, CardHeader, CardBody, Image, Button} from "@heroui/react";
+import {Card, CardHeader, CardBody, Image } from "@heroui/react";
 import Link from "next/link";
-import { useAuthStore } from "@/store/authStore";
-import { useRouter } from "next/navigation";
+// import { useAuthStore } from "@/store/authStore";
+// import { useRouter } from "next/navigation";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import CourseSkeleton from "./CourseSkeleton";
 import { CourseProps } from "@/app/types";
-import useCoursesStore from "@/store/coursesStore";
+// import startCheckout from "@/api/startCheckout";
+// import getUserStripeSubscriptions from "@/api/getUserStripeSubscriptions";
 
 
 export default function CoursesComponent() {
   const [courses, setCourses] = useState([] as CourseProps[]);
   const [loadingCourses, setLoadingCourses] = useState(true);
-  const { user } = useAuthStore();
-  const router = useRouter();
+  // const [subscriptions, setSubscriptions] = useState<object | null>(null);
+  // const [loadingCheckoutBtn, setLoadingCheckoutBtn] = useState(false);
+  // const { user } = useAuthStore();
+  // const router = useRouter();
+
+  // useEffect(() => {
+  //   if (user) {
+  //     const unsubscribe = getUserStripeSubscriptions(setSubscriptions);
+  //     return () => unsubscribe && unsubscribe();
+  //   }
+  // }, [user]);
+
+  // useEffect(() => {
+  //   console.log(subscriptions?.product.id)
+  //   console.log(courses[1]?.id)
+  // }, [subscriptions]);
 
   useEffect(() => {
     const retriveCourses = async () => {
@@ -27,11 +42,11 @@ export default function CoursesComponent() {
           id: doc.id,
           ...(doc.data() as Omit<CourseProps, 'id'>),
         }));
-        const order = ["beginner", "intermediate", "advance"];
-        const sortedCourses = coursesData.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+        // const order = ["beginner", "intermediate", "advance"];
+        // const sortedCourses = coursesData.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
 
-        useCoursesStore.setState({ courses: sortedCourses });
-        setCourses(sortedCourses);
+        setCourses(coursesData);
+        // setCourses(sortedCourses);
       } catch (error) {
         console.error("Error retrieving courses:", error);
       } finally {
@@ -41,17 +56,21 @@ export default function CoursesComponent() {
     retriveCourses();
   }, []);
 
-  const handleSubscribe = (courseId: string) => {
-    if (user) {
-      console.log(courseId);
-      router.push('/checkout');
-    } else {
-      router.push('/login');
-    }
-  };
+  // const handleSubscribe = async (courseId: string) => {
+  //   if (user) {
+  //     try {
+  //       setLoadingCheckoutBtn(true);
+  //       await startCheckout(courseId as string);
+  //     } catch (error) {
+  //       console.log(`An error occurred: ${error}`);
+  //     }
+  //   } else {
+  //     router.push('/login');
+  //   }
+  // };
 
   if (loadingCourses) {
-    return <div className="flex gap-5"><CourseSkeleton /><CourseSkeleton /><CourseSkeleton /></div>;
+    return <div className="flex gap-5 justify-center"><CourseSkeleton /><CourseSkeleton /><CourseSkeleton /></div>;
   }
 
   return (
@@ -67,25 +86,26 @@ export default function CoursesComponent() {
             <CardBody className="overflow-visible py-2">
               <Image
                 alt="Card background"
-                className="object-cover rounded-none"
+                className="object-cover rounded-none mb-2"
                 src={course.imageUrl}
                 width={270}
               />
-              <p className="text-default-500">{course.description}</p>
-              <div className="flex flex-row items-center justify-between gap-3 mt-4">
+              <p className="text-default-500">{course.description.substring(0, 113) + '...'}</p>
+              <div className="flex flex-row items-center justify-end gap-3 mt-4">
                 <Link
-                  href={`/courses/${course.id}`}
+                  href={`/courses/${course.url}`}
                   className="text-xs uppercase underline underline-offset-[6px] hover:no-underline"
                 >
                   See Details
                 </Link>
-                <Button
+                {/* <Button
                   variant="solid"
                   className="bg-gray-800 text-amber-50 rounded-none"
                   onPress={() => handleSubscribe(course.id)}
+                  disabled={loadingCheckoutBtn}
                 >
-                  Subscribe
-                </Button>
+                  {loadingCheckoutBtn ? <Spinner size='sm' color="default" /> : 'Subscribe'}
+                </Button> */}
               </div>
             </CardBody>
           </Card>

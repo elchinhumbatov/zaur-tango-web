@@ -16,7 +16,7 @@ export default function Header() {
         fill
         priority={true}
         // placeholder='blur'
-        // blurDataURL="/img/z-letter.png"
+        // blurDataURL="/img/hero.jpg"
       />
       <div className='absolute w-screen h-[20vh] bottom-[-5px] bg-gradient-to-b from-transparent to-[var(--background)] bg-opacity-25'></div>
     </div>
