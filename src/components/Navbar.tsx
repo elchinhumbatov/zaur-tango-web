@@ -20,6 +20,9 @@ const Navbar = () => {
   const { user, loading } = useAuthStore();
 
 
+  
+console.log('loading', loading)
+
   return (
     <>
     <motion.nav

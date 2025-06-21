@@ -35,12 +35,16 @@ export const useAuthStore = create<AuthStore>((set) => ({
   },
 
   syncUserData: async () => {
-    const docRef = doc(db, "users", auth?.currentUser?.uid as string);
-    const docSnap = await getDoc(docRef);
-    set({
-      userData: docSnap.exists() ? (docSnap.data() as UserData) : null,
-      loading: false,
-    });
+    if (auth?.currentUser) {
+      const docRef = doc(db, "users", auth.currentUser.uid as string);
+      const docSnap = await getDoc(docRef);
+      set({
+        userData: docSnap.exists() ? (docSnap.data() as UserData) : null,
+        loading: false,
+      });
+    } else {
+      set({ user: null, loading: false });
+    }
   },
 
   deleteUser: async () => set(() => ({
@@ -51,8 +55,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
 }));
 
 // Listen to Firebase auth changes once globally
-if (typeof window !== "undefined") {
   onAuthStateChanged(auth, async (user) => {
+    console.log('onauthstatechanged', user);
     const docRef = doc(db, "users", auth?.currentUser?.uid as string);
     const docSnap = await getDoc(docRef);
     useAuthStore.setState({
@@ -64,4 +68,3 @@ if (typeof window !== "undefined") {
     // setUser.loading = false;
     // useAuthStore.setState({ user, loading: false });
   });
-}
