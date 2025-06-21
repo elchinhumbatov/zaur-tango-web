@@ -19,10 +19,6 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, loading } = useAuthStore();
 
-
-  
-console.log('loading', loading)
-
   return (
     <>
     <motion.nav
