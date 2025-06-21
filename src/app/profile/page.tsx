@@ -1,18 +1,36 @@
 "use client";
 
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { BadgeCheck, BadgeX, Settings } from "lucide-react";
 import { Tooltip, useDisclosure } from "@heroui/react";
 import withAuth from "@/hocs/withAuth";
 import { useAuthStore } from "@/store/authStore";
 import ProfileSettingsModal from "@/components/ProfileSettingsModal";
+import getUserStripeSubscriptions from "@/api/getUserStripeSubscriptions";
+// import useCoursesStore from "@/store/coursesStore";
 
 
 const Profile = () => {
+  const [subscription, setSubscription] = useState<object | null>(null);
   const { user, userData, loading, syncUserData } = useAuthStore();
   const {isOpen, onOpen, onOpenChange, onClose} = useDisclosure();
+  // const { getCourse } = useCoursesStore();
 
 
+  // useLayoutEffect(() => {
+  //   if (!loading && !user) {
+  //     if (!user) {
+  //       router.push("/login");
+  //     } else {
+  //       const fetchUserData = async () => {
+  //         await syncUserData();
+  //       };
+
+  //       fetchUserData();
+  //     }
+  //   }
+  // }, [loading, user]);
+  
   useEffect(() => {
     const fetchUserData = async () => {
       await syncUserData();
@@ -20,6 +38,16 @@ const Profile = () => {
 
     fetchUserData();
   });
+
+  useEffect(() => {
+    const unsubscribe = getUserStripeSubscriptions(setSubscription);
+    return () => unsubscribe && unsubscribe();
+  }, []);
+  
+  // useEffect(() => {
+  //   console.log(subscription)
+
+  // }, [subscription]);
 
   if (loading) return <p className="text-center py-10">Loading...</p>;
 
@@ -54,15 +82,17 @@ const Profile = () => {
 
       <div>
         <h3 className="text-xl font-semibold mb-3">Purchased Courses</h3>
-        {userData?.subscriptions ? (
+        {subscription ? (
+        // {userData?.subscriptions ? (
           <ul className="space-y-2">
-            {Object.entries(userData.subscriptions).map(([key, value]) => (
+            
+            {/* {Object.entries(userData.subscriptions).map(([key, value]) => (
               <li key={key} className="bg-gray-100 p-3 rounded text-gray-800">
                 <p>Pack Name: {value?.title}</p>
                 <p>Subscribe At: {value?.subscribeAt}</p>
                 <p>Subscribtion ends at: {value?.subscribeAt}</p>
               </li>
-            ))}
+            ))} */}
           </ul>
         ) : (
           <p className="text-gray-500">

@@ -1,46 +1,50 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { Accordion, AccordionItem, Button } from "@heroui/react";
+import { Accordion, AccordionItem, Button, Spinner } from "@heroui/react";
 import { useAuthStore } from "@/store/authStore";
 import { useParams, useRouter } from "next/navigation";
-import jwt from "jsonwebtoken";
 import Player from "./Player";
-import { CourseProps } from "@/app/types";
-import useCoursesStore from "@/store/coursesStore";
+import { CourseProps, StripeSubscription } from "@/app/types";
 import { db } from "@/lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import s from "./course.module.css";
+import startCheckout from "@/api/startCheckout";
+import getUserStripeSubscriptions from "@/api/getUserStripeSubscriptions";
 
 export default function CourseComponent() {
   const [courseData, setCourseData] = useState({} as CourseProps | undefined);
   const [loadingCourses, setLoadingCourses] = useState(true);
-  const { user, userData } = useAuthStore();
+  const [loadingCheckoutBtn, setLoadingCheckoutBtn] = useState(false);
+  const [subscriptions, setSubscriptions] = useState<Array<StripeSubscription> | null>(null);
+  const { user } = useAuthStore();
   const router = useRouter();
   const params = useParams();
-  const { getCourse } = useCoursesStore();
-  const secretKey = Buffer.from(
-    process.env.NEXT_PUBLIC_MUX_SIGNING_PRIVATE_KEY || "",
-    "base64"
-  ).toString("ascii");
+
 
   useEffect(() => {
-    // console.log(user)
-    // console.log(user.subscriptions)
+    // console.log(userData);
     const fetchCourse = async () => {
       try {
-        const course = await getCourse(params?.slug as string);
-        if (course) {
-          setCourseData(course);
-        } else {
-          const docRef = doc(db, "courses", params.slug as string);
-          const docSnap = await getDoc(docRef);
-          if (docSnap.exists()) {
-            setCourseData(docSnap.data() as CourseProps);
+        const coursesRef = collection(db, "courses");
+        const q = query(coursesRef, where("url", "==", params.slug as string));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+          if (doc.exists()) {
+            // console.log(doc.data())
+            setCourseData({id: doc.id, ...doc.data()} as CourseProps);
           } else {
-            console.log("No such document!");
+            console.log("No such course!");
           }
-        }
+        });
+
+        // const docRef = doc(db, "courses", params.slug as string);
+        // const docSnap = await getDoc(docRef);
+        // if (docSnap.exists()) {
+        //   setCourseData(docSnap.data() as CourseProps);
+        // } else {
+        //   console.log("No such document!");
+        // }
       } catch (error) {
         console.error("Failed to fetch course:", error);
       } finally {
@@ -51,22 +55,26 @@ export default function CourseComponent() {
     fetchCourse();
   }, [params.slug]);
 
-  const handleTokenGeneration = (url: string) => {
-    return jwt.sign(
-      {
-        sub: url,
-        aud: "v",
-        exp: Math.floor(Date.now() / 1000) + 60 * 60,
-        kid: process.env.NEXT_PUBLIC_MUX_SIGNING_KEY_ID,
-      },
-      secretKey,
-      { algorithm: "RS256" }
-    );
-  };
-
-  const handleSubscribe = () => {
+  useEffect(() => {
     if (user) {
-      router.push("/checkout");
+      const unsubscribe = getUserStripeSubscriptions(setSubscriptions);
+      return () => unsubscribe && unsubscribe();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    console.log(subscriptions?.some((sub) => sub?.product?.id == courseData?.id))
+    // console.log(courseData)
+  }, [subscriptions, courseData]);
+
+  const handleSubscribe = async () => {
+    if (user) {
+      try {
+        setLoadingCheckoutBtn(true);
+        await startCheckout(courseData?.priceId as string);
+      } catch (error) {
+        console.log(`An error occurred: ${error}`);
+      }
     } else {
       router.push("/login");
     }
@@ -92,18 +100,21 @@ export default function CourseComponent() {
             alt={"pkg.title"}
             width={900}
             height={260}
-            className="w-full object-cover mb-4"
+            className="w-[90%] mx-auto object-cover mb-4"
           />
         </div>
         <div className="flex flex-col w-full md:w-3/4 m-auto my-10 gap-8">
           <p className="italic">{courseData?.description}</p>
-          <Button
-            variant="solid"
-            onPress={handleSubscribe}
-            className="self-end w-[150px] bg-gray-600 text-amber-50 rounded-none"
-          >
-            Subscribe
+          {courseData && subscriptions && !subscriptions.some((sub)=> sub?.product?.id === courseData?.id) ? (
+            <Button
+              variant="solid"
+              onPress={handleSubscribe}
+              disabled={loadingCheckoutBtn}
+              className="self-end w-[150px] bg-gray-800 text-amber-50 rounded-none"
+            >
+            {loadingCheckoutBtn ? <Spinner size='sm' color="default" /> : 'Subscribe'}
           </Button>
+          ) : null }
         </div>
         <div>
           <h3 className="text-xl mb-3">Course content</h3>
@@ -115,7 +126,6 @@ export default function CourseComponent() {
                   aria-label={`Accordion ${index + 1}`}
                   title={video?.title}
                 >
-                  {/* <p>{video?.description}</p> */}
                   <p
                     className={`mb-8 text-gray-600 ${s.accordionItem}`}
                     dangerouslySetInnerHTML={{
@@ -123,12 +133,9 @@ export default function CourseComponent() {
                     }}
                   ></p>
                   {/* <p>Duration: {video?.duration} minutes</p> */}
-                  {user && userData && userData?.subscriptions && (
-                    <Player
-                      token={handleTokenGeneration(video.url)}
-                      playbackId={video.url}
-                    />
-                  )}
+                  {courseData && subscriptions && subscriptions.some((sub)=> sub?.product?.id == courseData?.id) && 
+                    <Player playbackId={video.url} />
+                  }
                 </AccordionItem>
               ))}
             </Accordion>
