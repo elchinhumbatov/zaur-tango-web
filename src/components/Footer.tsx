@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-12 grid-rows-2 sm:grid-rows-1 gap-8">
           <div className='col-span-6 sm:col-span-4 order-2 sm:order-1 justify-items-center sm:justify-items-start'>
             <p className='mb-2'>CALL US</p>
-            <a href='tel:+112312312'>123123123</a>
+            <a href='tel:+971543962051'>+971 54 396 2051</a>
           </div>
 
           <div className='col-span-12 sm:col-span-4 order-1 sm:order-2 justify-items-center'>

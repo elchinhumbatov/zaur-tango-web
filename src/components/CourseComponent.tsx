@@ -16,11 +16,11 @@ export default function CourseComponent() {
   const [courseData, setCourseData] = useState({} as CourseProps | undefined);
   const [loadingCourses, setLoadingCourses] = useState(true);
   const [loadingCheckoutBtn, setLoadingCheckoutBtn] = useState(false);
-  const [subscriptions, setSubscriptions] = useState<Array<StripeSubscription> | null>(null);
+  const [subscriptions, setSubscriptions] =
+    useState<Array<StripeSubscription> | null>(null);
   const { user } = useAuthStore();
   const router = useRouter();
   const params = useParams();
-
 
   useEffect(() => {
     // console.log(userData);
@@ -32,7 +32,7 @@ export default function CourseComponent() {
         querySnapshot.forEach((doc) => {
           if (doc.exists()) {
             // console.log(doc.data())
-            setCourseData({id: doc.id, ...doc.data()} as CourseProps);
+            setCourseData({ id: doc.id, ...doc.data() } as CourseProps);
           } else {
             console.log("No such course!");
           }
@@ -62,10 +62,12 @@ export default function CourseComponent() {
     }
   }, [user]);
 
-  useEffect(() => {
-    console.log(subscriptions?.some((sub) => sub?.product?.id == courseData?.id))
-    // console.log(courseData)
-  }, [subscriptions, courseData]);
+  // useEffect(() => {
+  //   console.log(
+  //     subscriptions?.some((sub) => sub?.product?.id == courseData?.id)
+  //   );
+  //   console.log(courseData)
+  // }, [subscriptions, courseData]);
 
   const handleSubscribe = async () => {
     if (user) {
@@ -94,27 +96,47 @@ export default function CourseComponent() {
         <h2 className="text-center text-2xl md:text-3xl my-3">
           {courseData?.title}
         </h2>
-        <div>
+        <div className="block md:hidden">
           <Image
-            src={courseData?.imageUrl as string}
-            alt={"pkg.title"}
+            src={courseData?.imagesUrl[0] as string}
+            alt={courseData?.title as string}
             width={900}
             height={260}
-            className="w-[90%] mx-auto object-cover mb-4"
+            objectFit="cover"
+            className="w-full md:w-[30%] mx-auto mb-4"
           />
+        </div>
+        <div className="hidden md:flex gap-4">
+          {courseData?.imagesUrl.map((imageUrl, index) => (
+              <Image
+                key={index}
+                src={imageUrl as string}
+                alt={courseData.title}
+                width={900}
+                height={260}
+                objectFit="cover"
+                className="w-full md:w-[30%] mx-auto mb-4"
+              />
+          ))}
         </div>
         <div className="flex flex-col w-full md:w-3/4 m-auto my-10 gap-8">
           <p className="italic">{courseData?.description}</p>
-          {courseData && subscriptions && !subscriptions.some((sub)=> sub?.product?.id === courseData?.id) ? (
+          {courseData &&
+          subscriptions &&
+          !subscriptions.some((sub) => sub?.product?.id === courseData?.id) ? (
             <Button
               variant="solid"
               onPress={handleSubscribe}
               disabled={loadingCheckoutBtn}
               className="self-end w-[150px] bg-gray-800 text-amber-50 rounded-none"
             >
-            {loadingCheckoutBtn ? <Spinner size='sm' color="default" /> : 'Subscribe'}
-          </Button>
-          ) : null }
+              {loadingCheckoutBtn ? (
+                <Spinner size="sm" color="default" />
+              ) : (
+                "Subscribe"
+              )}
+            </Button>
+          ) : null}
         </div>
         <div>
           <h3 className="text-xl mb-3">Course content</h3>
@@ -133,9 +155,11 @@ export default function CourseComponent() {
                     }}
                   ></p>
                   {/* <p>Duration: {video?.duration} minutes</p> */}
-                  {courseData && subscriptions && subscriptions.some((sub)=> sub?.product?.id == courseData?.id) && 
-                    <Player playbackId={video.url} />
-                  }
+                  {courseData &&
+                    subscriptions &&
+                    subscriptions.some(
+                      (sub) => sub?.product?.id == courseData?.id
+                    ) && <Player playbackId={video.url} />}
                 </AccordionItem>
               ))}
             </Accordion>

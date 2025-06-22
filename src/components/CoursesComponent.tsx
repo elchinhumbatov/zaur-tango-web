@@ -87,8 +87,9 @@ export default function CoursesComponent() {
               <Image
                 alt="Card background"
                 className="object-cover rounded-none mb-2"
-                src={course.imageUrl}
+                src={course.imagesUrl[0]}
                 width={270}
+                height={390}
               />
               <p className="text-default-500">{course.description.substring(0, 113) + '...'}</p>
               <div className="flex flex-row items-center justify-end gap-3 mt-4">

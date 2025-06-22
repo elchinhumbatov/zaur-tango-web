@@ -23,7 +23,7 @@ export default function ContactPage() {
         <div>
           <p className="text-md">
             <b>Phone: </b>
-            <a href='tel:1231231231' className="text-gray-700 underlined"> +1 (123) 456-7890</a>
+            <a href='tel:+971543962051' className="text-gray-700 underlined"> +971 54 396 2051</a>
           </p>
         </div>
         <div>
