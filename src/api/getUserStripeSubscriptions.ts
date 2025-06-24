@@ -28,7 +28,7 @@ export default function getUserStripeSubscriptions(
       snapshot.forEach((doc) => {
         subscriptions.push({ id: doc.id, ...doc.data() });
       });
-      console.log(subscriptions)
+      // console.log(subscriptions)
 
       // get product details
 

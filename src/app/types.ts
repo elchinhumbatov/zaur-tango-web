@@ -5,6 +5,7 @@ export type CourseProps = {
   title: string;
   description: string;
   imagesUrl: Array<string>;
+  backgroundUrl: string;
   price: number;
   priceId: string;
   url: string;

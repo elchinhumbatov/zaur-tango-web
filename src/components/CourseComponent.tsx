@@ -96,34 +96,42 @@ export default function CourseComponent() {
         <h2 className="text-center text-2xl md:text-3xl my-3">
           {courseData?.title}
         </h2>
-        <div className="block md:hidden">
-          <Image
-            src={courseData?.imagesUrl[0] as string}
-            alt={courseData?.title as string}
-            width={900}
-            height={260}
-            objectFit="cover"
-            className="w-full md:w-[30%] mx-auto mb-4"
-          />
-        </div>
-        <div className="hidden md:flex gap-4">
-          {courseData?.imagesUrl.map((imageUrl, index) => (
+        {courseData?.backgroundUrl ? (
+          <div className="w-full mb-4">
+            <video width={500} height={300} autoPlay muted loop className="w-full">
+              <source src={courseData.backgroundUrl} type="video/mp4" />
+            </video>
+          </div>
+        ) : (
+          <>
+            <div className="block md:hidden">
               <Image
-                key={index}
-                src={imageUrl as string}
-                alt={courseData.title}
+                src={courseData?.imagesUrl[0] as string}
+                alt={courseData?.title as string}
                 width={900}
                 height={260}
-                objectFit="cover"
-                className="w-full md:w-[30%] mx-auto mb-4"
+                className="w-full object-cover md:w-[30%] mx-auto mb-4"
               />
-          ))}
-        </div>
+            </div>
+            <div className="hidden md:flex justify-center gap-4">
+              {courseData?.imagesUrl.map((imageUrl, index) => (
+                <div key={index} className="w-full md:w-[30%]">
+                  <Image
+                    src={imageUrl as string}
+                    alt={courseData.title}
+                    width={900}
+                    height={260}
+                    className="object-cover mx-auto mb-4"
+                  />
+                </div>
+              ))}
+            </div>
+          </>
+        )}
         <div className="flex flex-col w-full md:w-3/4 m-auto my-10 gap-8">
           <p className="italic">{courseData?.description}</p>
           {courseData &&
-          subscriptions &&
-          !subscriptions.some((sub) => sub?.product?.id === courseData?.id) ? (
+          !subscriptions?.some((sub) => sub?.product?.id === courseData?.id) ? (
             <Button
               variant="solid"
               onPress={handleSubscribe}
@@ -148,6 +156,11 @@ export default function CourseComponent() {
                   aria-label={`Accordion ${index + 1}`}
                   title={video?.title}
                 >
+                  {courseData &&
+                    subscriptions &&
+                    subscriptions.some(
+                      (sub) => sub?.product?.id == courseData?.id
+                    ) && <Player playbackId={video.url} />}
                   <p
                     className={`mb-8 text-gray-600 ${s.accordionItem}`}
                     dangerouslySetInnerHTML={{
@@ -155,11 +168,6 @@ export default function CourseComponent() {
                     }}
                   ></p>
                   {/* <p>Duration: {video?.duration} minutes</p> */}
-                  {courseData &&
-                    subscriptions &&
-                    subscriptions.some(
-                      (sub) => sub?.product?.id == courseData?.id
-                    ) && <Player playbackId={video.url} />}
                 </AccordionItem>
               ))}
             </Accordion>

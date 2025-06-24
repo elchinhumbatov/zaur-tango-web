@@ -6,13 +6,15 @@ export default function HomeAbout() {
   return (
     <section className="mt-10">
       <div className="relative h-[100vh] w-full">
+        <div className='absolute z-10 w-screen h-[20vh] top-0 bg-gradient-to-b from-[var(--background)] to-transparent bg-opacity-25'></div>
         <Image
           alt="About"
-          className="object-cover absolute left-0 top-0 w-[100vw] h-[100vh]"
+          className="object-cover absolute left-0 top-0 w-[100vw] h-[100vh] z-1"
           src="/img/tree.jpg"
           width={5000}
           height={800}
         />
+        <div className='absolute w-screen h-[20vh] bottom-[-5px] bg-gradient-to-b from-transparent to-[var(--background)] bg-opacity-25'></div>
       </div>
       <div className="mx-auto py-10 px-5">
         <SectionTitle

@@ -7,6 +7,7 @@ import {
   ModalFooter,
   Button,
   Input,
+  addToast,
 } from "@heroui/react";
 import { useState } from "react";
 import {
@@ -62,10 +63,12 @@ export default function ProfileSettingsModal({
 
         await syncUserData();
 
-        setMsg("Profile updated successfully!");
-        setTimeout(() => {
-          onClose();
-        }, 1000);
+        addToast({
+          title: "Profile updated successfully",
+          // description: "Toast displayed successfully",
+          color: 'success',
+        })
+        onClose();
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
