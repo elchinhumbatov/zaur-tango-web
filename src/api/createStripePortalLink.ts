@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // utils/createPortalLink.ts
 import { auth, functions } from "@/lib/firebase";
 import { httpsCallable } from "firebase/functions";
