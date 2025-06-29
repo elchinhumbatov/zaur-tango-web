@@ -10,7 +10,7 @@ export default function HomeAbout() {
         <Image
           alt="About"
           className="object-cover absolute left-0 top-0 w-[100vw] h-[100vh] z-1"
-          src="/img/poster_2.jpg"
+          src="/img/poster_2.webp"
           width={2000}
           height={800}
         />

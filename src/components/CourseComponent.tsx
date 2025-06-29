@@ -98,7 +98,7 @@ export default function CourseComponent() {
         </h2>
         {courseData?.backgroundUrl ? (
           <div className="w-full mb-4">
-            <video width={500} height={300} autoPlay muted loop className="w-full">
+            <video width={500} height={300} autoPlay muted loop playsInline className="w-full">
               <source src={courseData.backgroundUrl} type="video/mp4" />
             </video>
           </div>
