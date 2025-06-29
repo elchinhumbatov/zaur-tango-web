@@ -99,14 +99,18 @@ const Profile = () => {
             className="p-2 rounded-full hover:bg-gray-100 transition"
             aria-label="Settings"
           >
-            <Settings className="w-6 h-6 text-gray-700" />
+            <Tooltip content="Profile Settings" size="sm">
+              <Settings className="w-6 h-6 text-gray-700" />
+            </Tooltip>
           </button>
           <button
             onClick={handleManageSubscription}
             className="p-2 rounded-full hover:bg-gray-100 transition"
             aria-label="Settings"
           >
-            <CalendarCog className="w-6 h-6 text-gray-700" />
+            <Tooltip content="Manage Subscriptions" size="sm">
+              <CalendarCog className="w-6 h-6 text-gray-700" />
+            </Tooltip>
           </button>
         </div>
       </div>
@@ -118,7 +122,7 @@ const Profile = () => {
             <CourseSkeleton />
           </div>
         )}
-        <div className="flex flex-wrap gap-8 m-auto align-center">
+        <div className="flex flex-wrap gap-8 m-auto align-center justify-center md:justify-start">
           {subscriptions ? subscribedCourses.map((course) => (
             <CourseCardComponent
               key={course.id}

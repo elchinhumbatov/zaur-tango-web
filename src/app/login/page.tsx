@@ -49,7 +49,7 @@ const LoginPage = () => {
           title="Login"
         />
         <p className="text-sm text-center">
-          Not registered yet?{" "}
+          Don&apos;t have an account yet?{" "}
           <Link href="/signup" className="underline">
             Sign up &#8599;
           </Link>

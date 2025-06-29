@@ -24,10 +24,10 @@ export default function CourseCardComponent({
           <CardBody className="overflow-visible py-2">
             <Image
               alt="Card background"
-              className="object-cover rounded-none mb-2"
+              className="object-cover rounded-none mb-2 min-h-[480px]"
               src={course.imagesUrl[0]}
               width={270}
-              height={390}
+              height={480}
             />
             <p className="text-default-500">
               {course.description.substring(0, 113) + "..."}
