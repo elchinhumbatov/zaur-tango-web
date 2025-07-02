@@ -3,18 +3,25 @@ import Image from "next/image";
 import Link from "next/link";
 import { CourseProps } from "@/app/types";
 import { Card, CardBody, CardHeader } from "@heroui/react";
+import { Timestamp } from "firebase/firestore";
 
 export default function CourseCardComponent({
   course,
+  subscribedAt = false,
+  nextRenewalAt = false,
 }: {
   course: CourseProps;
+  subscribedAt?: boolean | Timestamp;
+  nextRenewalAt?: boolean | Timestamp;
 }) {
   return (
     <div className="max-w-[300px]">
       <Link href={`/courses/${course.url}`} className="inline-block">
         <Card className="py-4 bg-transparent shadow-none">
           <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-            <p className="text-tiny uppercase font-bold">{course.title}</p>
+            <p className="uppercase">{course.title}</p>
+            {subscribedAt && subscribedAt instanceof Timestamp && <p className="text-small">Subscribed at {subscribedAt.toDate().toLocaleDateString()}</p> }
+            {nextRenewalAt && nextRenewalAt instanceof Timestamp && <p className="text-small">Next renewal at {nextRenewalAt.toDate().toLocaleDateString()}</p> }
             <small className="text-default-500">
               {course.videos.length}{" "}
               {course.videos.length == 1 ? "Lesson" : "Lessons"}

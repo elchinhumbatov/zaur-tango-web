@@ -12,7 +12,7 @@ export default function Player({playbackId}: {playbackId: string}) {
         {
           sub: playbackId,
           aud: "v",
-          exp: Math.floor(Date.now() / 1000) + 60 * 60,
+          exp: Math.floor(Date.now() / 1000) + 5,
           kid: process.env.NEXT_PUBLIC_MUX_SIGNING_KEY_ID,
         },
         secretKey,

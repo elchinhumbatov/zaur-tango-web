@@ -8,7 +8,7 @@ export default function About() {
       <div className="mb-12">
         <div>
           <Image
-            src="/img/about_me_cropped.jpeg"
+            src="/img/about_me.jpeg"
             alt="About Me"
             className="w-full md:w-1/2 h-auto float-left mt-2 mb-6 mr-0 md:mr-6"
             width={500}

@@ -13,32 +13,35 @@ import CourseCardComponent from "@/components/CourseCardComponent";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import createStripePortalLink from "@/api/createStripePortalLink";
-
+import Link from "next/link";
 
 const Profile = () => {
-  const [subscribedCourses, setSubscribedCourses] = useState([] as CourseProps[]);
+  const [subscribedCourses, setSubscribedCourses] = useState(
+    [] as CourseProps[]
+  );
   const [loadingCourses, setLoadingCourses] = useState(true);
   const [creatingPortalLink, setCreatingPortalLink] = useState(false);
-  const [subscriptions, setSubscriptions] = useState<Array<object> | null>(null);
+  const [subscriptions, setSubscriptions] = useState<Array<object> | null>(
+    null
+  );
   const { user, userData, loading, syncUserData } = useAuthStore();
-  const {isOpen, onOpen, onOpenChange, onClose} = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
   useEffect(() => {
+    if (subscriptions) {
       const retriveCourses = async () => {
         try {
           setLoadingCourses(true);
           const coursesCollection = collection(db, "courses");
           const querySnapshot = await getDocs(coursesCollection);
-          const coursesData: CourseProps[] = querySnapshot.docs.map(doc => ({
+          const coursesData: CourseProps[] = querySnapshot.docs.map((doc) => ({
             id: doc.id,
-            ...(doc.data() as Omit<CourseProps, 'id'>),
+            ...(doc.data() as Omit<CourseProps, "id">),
           }));
 
-          const filteredCourses = coursesData.filter(course => {
-            return subscriptions?.some((sub: any) => sub.product.id === course.id);
-          });
-
-          // console.log(filteredCourses)
+          const filteredCourses = coursesData.filter((course) =>
+            subscriptions.some((sub: any) => sub.product.id === course.id)
+          );
           setSubscribedCourses(filteredCourses);
         } catch (error) {
           console.error("Error retrieving courses:", error);
@@ -47,7 +50,8 @@ const Profile = () => {
         }
       };
       retriveCourses();
-    }, [subscriptions]);
+    }
+  }, [subscriptions]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -62,11 +66,11 @@ const Profile = () => {
   const handleManageSubscription = async () => {
     setCreatingPortalLink(true);
     await createStripePortalLink();
-    // setCreatingPortalLink(false);
-  }
+  };
 
   if (loading) return <p className="text-center py-10">Loading...</p>;
-  if (creatingPortalLink) return <p className="text-center py-10">Redirecting...</p>;
+  if (creatingPortalLink)
+    return <p className="text-center py-10">Redirecting, please wait a moment...</p>;
 
   return (
     <div className="container py-20 px-5">
@@ -81,7 +85,12 @@ const Profile = () => {
               {user?.emailVerified ? (
                 <BadgeCheck size={15} color="green" />
               ) : (
-                <Tooltip content="Not Verified" placement="right" delay={500} size="sm">
+                <Tooltip
+                  content="Not Verified"
+                  placement="right"
+                  delay={500}
+                  size="sm"
+                >
                   <BadgeX size={15} />
                 </Tooltip>
               )}
@@ -92,26 +101,26 @@ const Profile = () => {
               Phone: {userData.phone}
             </p>
           )}
-        </div>
-        <div>
-          <button
-            onClick={onOpen}
-            className="p-2 rounded-full hover:bg-gray-100 transition"
-            aria-label="Settings"
-          >
-            <Tooltip content="Profile Settings" size="sm">
-              <Settings className="w-6 h-6 text-gray-700" />
-            </Tooltip>
-          </button>
-          <button
-            onClick={handleManageSubscription}
-            className="p-2 rounded-full hover:bg-gray-100 transition"
-            aria-label="Settings"
-          >
-            <Tooltip content="Manage Subscriptions" size="sm">
+          <div className="flex items-center space-x-2 mt-2">
+            <p>Manage Subscriptions: </p>
+            <button
+              onClick={handleManageSubscription}
+              className="p-2 rounded-full hover:bg-gray-100 transition"
+              aria-label="Settings"
+            >
               <CalendarCog className="w-6 h-6 text-gray-700" />
-            </Tooltip>
-          </button>
+            </button>
+          </div>
+          <div className="flex items-center space-x-2 mt-2">
+            <p>Settings: </p>
+            <button
+              onClick={onOpen}
+              className="p-2 rounded-full hover:bg-gray-100 transition"
+              aria-label="Settings"
+            >
+              <Settings className="w-6 h-6 text-gray-700" />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -123,25 +132,38 @@ const Profile = () => {
           </div>
         )}
         <div className="flex flex-wrap gap-8 m-auto align-center justify-center md:justify-start">
-          {subscriptions ? subscribedCourses.map((course) => (
-            <CourseCardComponent
-              key={course.id}
-              course={course}
-            />
-          )) : (
+          {subscriptions ? (
+            subscribedCourses.map((course) => {
+              const subscriptionItem: any = subscriptions.find((item: any) => item.product.id === course.id);
+              return (
+                <div key={course.id}>
+                  <CourseCardComponent 
+                    course={course} 
+                    subscribedAt={subscriptionItem.created} 
+                    nextRenewalAt={subscriptionItem.current_period_end} 
+                  />
+                </div>
+              );
+            })
+          ) : (
             <p className="text-gray-500">
-              You haven’t purchased any courses yet.
+              You haven’t purchased any courses yet. Explore now{" "}
+              <Link href="/courses" className="underline">
+                here
+              </Link>
+              .
             </p>
           )}
         </div>
       </div>
 
-      {isOpen && 
-        <ProfileSettingsModal 
-          isOpen={isOpen} 
-          onOpenChange={onOpenChange} 
-          onClose={onClose} 
-        />}
+      {isOpen && (
+        <ProfileSettingsModal
+          isOpen={isOpen}
+          onOpenChange={onOpenChange}
+          onClose={onClose}
+        />
+      )}
     </div>
   );
 };

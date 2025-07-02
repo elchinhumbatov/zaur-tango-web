@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { Accordion, AccordionItem, Button, Spinner } from "@heroui/react";
+import { Accordion, AccordionItem, Button, Spinner, Tooltip } from "@heroui/react";
 import { useAuthStore } from "@/store/authStore";
 import { useParams, useRouter } from "next/navigation";
 import Player from "./Player";
@@ -11,6 +11,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import s from "./course.module.css";
 import startCheckout from "@/api/startCheckout";
 import getUserStripeSubscriptions from "@/api/getUserStripeSubscriptions";
+import { Lock } from "lucide-react";
 
 export default function CourseComponent() {
   const [courseData, setCourseData] = useState({} as CourseProps | undefined);
@@ -98,7 +99,15 @@ export default function CourseComponent() {
         </h2>
         {courseData?.backgroundUrl ? (
           <div className="w-full mb-4">
-            <video width={500} height={300} autoPlay muted loop playsInline className="w-full">
+            <video
+              width={500}
+              height={300}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full"
+            >
               <source src={courseData.backgroundUrl} type="video/mp4" />
             </video>
           </div>
@@ -147,9 +156,22 @@ export default function CourseComponent() {
           ) : null}
         </div>
         <div>
-          <h3 className="text-xl mb-3">Course content</h3>
+          <div className="flex items-center mb-4 gap-2">
+            <h3 className="text-xl">Course content </h3>
+            {!subscriptions?.some(
+              (sub) => sub?.product?.id === courseData?.id
+            ) && <Tooltip content="You need to subscribe to access the course content">
+              <Lock size={18} />
+            </Tooltip>}
+          </div>
           {courseData?.videos ? (
-            <Accordion>
+            <Accordion
+              isDisabled={
+                !subscriptions?.some(
+                  (sub) => sub?.product?.id === courseData?.id
+                )
+              }
+            >
               {courseData.videos.map((video, index) => (
                 <AccordionItem
                   key={index}
