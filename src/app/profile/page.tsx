@@ -50,6 +50,8 @@ const Profile = () => {
         }
       };
       retriveCourses();
+    } else {
+      setLoadingCourses(false);
     }
   }, [subscriptions]);
 

@@ -29,7 +29,7 @@ export default function ContactPage() {
         <div>
           <p className="text-md">
             <b>Mail: </b>
-            <a href='mailto:test@tango.com' className="text-gray-700"> support@zaurtango.com</a>
+            <a href='mailto:support@tango.com' className="text-gray-700"> support@zaurtango.com</a>
           </p>
         </div>
       </div>

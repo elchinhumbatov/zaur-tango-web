@@ -17,9 +17,9 @@ export default async function startCheckout(priceId: string) {
   const docRef = await addDoc(checkoutSessionRef, {
     price: priceId,
     // success_url: 'https://zaurtango.com', 
-    success_url: window.location.origin,
+    success_url: window.location.href,
     // cancel_url: 'https://zaurtango.com',
-    cancel_url: window.location.origin,
+    cancel_url: window.location.href,
   });
 
   // Listen for the session URL
