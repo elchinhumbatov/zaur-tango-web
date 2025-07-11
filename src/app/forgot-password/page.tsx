@@ -3,6 +3,7 @@ import { db } from "@/lib/firebase";
 import { addToast } from "@heroui/react";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -43,7 +44,7 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="flex items-center justify-center p-4 h-[65vh]">
+    <div className="flex items-center justify-center p-4 px-4 py-20">
       <div className="flex flex-col items-center justify-center bg-amber-50 w-full md:w-3/4 py-20">
         <form onSubmit={handleSubmit} className="p-6 w-full space-y-4 max-w-sm">
           <h1 className="text-xl font-semibold border-b">Reset Password</h1>
@@ -63,6 +64,12 @@ export default function ForgotPassword() {
             Reset Password
           </button>
           {error && <p className="text-red-500 text-sm">{error}</p>}
+          <p className="text-sm text-center">
+            No need to reset?{" "}
+            <Link href="/login" className="underline">
+              Log in &#8599;
+            </Link>
+          </p>
         </form>
       </div>
     </div>
