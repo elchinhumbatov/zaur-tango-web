@@ -4,16 +4,22 @@ import {
   signInWithEmailAndPassword,
   signOut,
   User,
+  GoogleAuthProvider,
+  signInWithPopup
 } from "firebase/auth";
 import { auth, db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { UserData } from "@/app/types";
+
+
+const googleProvider = new GoogleAuthProvider();
 
 interface AuthStore {
   user: User | null;
   userData: UserData | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
+  loginWithGoogle: () => Promise<User>;
   logout: () => Promise<void>;
   syncUserData: () => Promise<void>;
   deleteUser: () => Promise<void>;
@@ -27,6 +33,13 @@ export const useAuthStore = create<AuthStore>((set) => ({
   login: async (email, password) => {
     await signInWithEmailAndPassword(auth, email, password);
     set({ user: auth.currentUser, loading: false });
+  },
+
+  loginWithGoogle: async () => {
+    const response = await signInWithPopup(auth, googleProvider);
+    // const credential = GoogleAuthProvider.credentialFromResult(response);
+    set({ user: response.user, loading: false });
+    return response.user;
   },
 
   logout: async () => {
