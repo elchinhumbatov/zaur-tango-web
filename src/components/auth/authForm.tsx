@@ -1,8 +1,9 @@
 "use client";
+import Link from "next/link";
 import React, { useState } from "react";
 
 interface AuthFormProps {
-  formSubmit: (
+  formSubmitAction: (
     event: React.FormEvent<HTMLFormElement>,
     email: string,
     password: string,
@@ -15,7 +16,7 @@ interface AuthFormProps {
 }
 
 export default function AuthForm({
-  formSubmit,
+  formSubmitAction,
   error,
   loading,
   title,
@@ -26,7 +27,7 @@ export default function AuthForm({
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    formSubmit(e, email, password, confirmPassword, fullName);
+    formSubmitAction(e, email, password, confirmPassword, fullName);
   };
 
   return (
@@ -77,6 +78,10 @@ export default function AuthForm({
       ) : null}
 
       {error && <p className="text-red-500 text-sm">{error}</p>}
+
+      {title === "Login" ? (
+        <Link href='/forgot-password' className="text-sm">Forgot Password?</Link>
+      ) : null}
 
       <button
         type="submit"

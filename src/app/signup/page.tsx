@@ -67,7 +67,7 @@ function Signup() {
     <div className="flex items-center justify-center p-4 h-[65vh]">
       <div className="flex flex-col items-center justify-center bg-amber-50 w-full md:w-3/4 py-20">
         <AuthForm
-          formSubmit={handleSignup}
+          formSubmitAction={handleSignup}
           error={error}
           loading={loading}
           title="Create an Account"

@@ -2,7 +2,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { BadgeCheck, BadgeX, CalendarCog, Settings } from "lucide-react";
-import { Button, Tooltip, useDisclosure } from "@heroui/react";
+import { Button, Spinner, Tooltip, useDisclosure } from "@heroui/react";
 import withAuth from "@/hocs/withAuth";
 import { useAuthStore } from "@/store/authStore";
 import ProfileSettingsModal from "@/components/ProfileSettingsModal";
@@ -72,7 +72,12 @@ const Profile = () => {
 
   if (loading) return <p className="text-center py-10">Loading...</p>;
   if (creatingPortalLink)
-    return <p className="text-center py-10">Redirecting, please wait a moment...</p>;
+    return (
+      <div className="flex flex-col justify-center items-center gap-2 h-[70vh]">
+        <Spinner color="default" />
+        <p className="text-center">Redirecting, please wait a moment...</p>
+      </div>
+    )
 
   return (
     <div className="container py-20 px-5">
