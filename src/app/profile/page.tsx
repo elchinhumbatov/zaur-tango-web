@@ -2,7 +2,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { BadgeCheck, BadgeX, CalendarCog, Settings } from "lucide-react";
-import { Tooltip, useDisclosure } from "@heroui/react";
+import { Button, Tooltip, useDisclosure } from "@heroui/react";
 import withAuth from "@/hocs/withAuth";
 import { useAuthStore } from "@/store/authStore";
 import ProfileSettingsModal from "@/components/ProfileSettingsModal";
@@ -103,25 +103,13 @@ const Profile = () => {
               Phone: {userData.phone}
             </p>
           )}
-          <div className="flex items-center space-x-2 mt-2">
-            <p>Manage Subscriptions: </p>
-            <button
-              onClick={handleManageSubscription}
-              className="p-2 rounded-full hover:bg-gray-100 transition"
-              aria-label="Settings"
-            >
-              <CalendarCog className="w-6 h-6 text-gray-700" />
-            </button>
-          </div>
-          <div className="flex items-center space-x-2 mt-2">
-            <p>Settings: </p>
-            <button
-              onClick={onOpen}
-              className="p-2 rounded-full hover:bg-gray-100 transition"
-              aria-label="Settings"
-            >
-              <Settings className="w-6 h-6 text-gray-700" />
-            </button>
+          <div className="flex gap-2 justify-between pt-5">
+            <Button variant="bordered" onPress={handleManageSubscription} endContent={<CalendarCog size={18} />} className="rounded-none">
+              Manage Subscriptions
+            </Button>
+            <Button variant="bordered" onPress={onOpen} endContent={<Settings size={18} />} className="rounded-none">
+              Settings
+            </Button>
           </div>
         </div>
       </div>
@@ -142,7 +130,8 @@ const Profile = () => {
                   <CourseCardComponent 
                     course={course} 
                     subscribedAt={subscriptionItem.created} 
-                    nextRenewalAt={subscriptionItem.current_period_end} 
+                    nextRenewalAt={subscriptionItem.current_period_end}
+                    cancelAt={subscriptionItem.cancel_at}
                   />
                 </div>
               );

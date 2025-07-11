@@ -116,8 +116,8 @@ export default function ProfileSettingsModal({
 
   const handleLogout = async () => {
     try {
-      await deleteUser();
       await logout();
+      await deleteUser();
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.log(error.message);
