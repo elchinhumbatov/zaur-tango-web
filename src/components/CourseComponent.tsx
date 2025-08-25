@@ -12,6 +12,7 @@ import s from "./course.module.css";
 import startCheckout from "@/api/startCheckout";
 import getUserStripeSubscriptions from "@/api/getUserStripeSubscriptions";
 import { Lock } from "lucide-react";
+// import copyFirestoreDocument from "@/api/copyFirebaseDoc";
 
 export default function CourseComponent() {
   const [courseData, setCourseData] = useState({} as CourseProps | undefined);
@@ -83,6 +84,12 @@ export default function CourseComponent() {
     }
   };
 
+  // const handleCopy = async () => {
+  //   console.log('pressed')
+  //   await copyFirestoreDocument('courses', 'prod_SWs9OAdYsA1oA2', 'courses', 'prod_Svvlc1x2LT8x1g');
+  //   console.log('clonning done')
+  // }
+
   if (loadingCourses) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -138,6 +145,7 @@ export default function CourseComponent() {
           </>
         )}
         <div className="flex flex-col w-full md:w-3/4 m-auto my-10 gap-8">
+        {/* <Button onPress={handleCopy}>clone</Button> */}
           <p className="italic">{courseData?.description}</p>
           {courseData &&
           !subscriptions?.some((sub) => sub?.product?.id === courseData?.id) ? (
@@ -145,7 +153,7 @@ export default function CourseComponent() {
               variant="solid"
               onPress={handleSubscribe}
               disabled={loadingCheckoutBtn}
-              className="self-end w-[150px] bg-gray-800 text-amber-50 rounded-none"
+              className="self-end w-full md:w-[170px] bg-gray-800 text-amber-50 rounded-none"
             >
               {loadingCheckoutBtn ? (
                 <Spinner size="sm" color="default" />

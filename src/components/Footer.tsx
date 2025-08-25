@@ -7,7 +7,7 @@ export default function Footer() {
     <section>
       <div className="container mx-auto px-5 pt-20 pb-10">
         <div className="grid grid-cols-12 grid-rows-2 sm:grid-rows-1 gap-8">
-          <div className='col-span-6 sm:col-span-4 order-2 sm:order-1 justify-items-center sm:justify-items-start'>
+          <div className='col-span-6 sm:col-span-4 order-2 sm:order-1 flex flex-col'>
             <p className='mb-2'>CALL US</p>
             <a href='tel:+971543962051'>+971 54 396 2051</a>
           </div>
@@ -16,11 +16,17 @@ export default function Footer() {
             <Image src='/img/logo-light.png' alt='logo' width={150} height={50} />
           </div>
           
-          <div className='col-span-6 sm:col-span-4 order-3 justify-items-center sm:justify-items-end'>
+          <div className='col-span-6 sm:col-span-4 order-3 flex flex-col items-end justify-items-end'>
             <p className='mb-2'>FOLLOW</p>
-            <a href='https://www.instagram.com/zaurtango/' target='_blank'>
-              <Instagram />
-            </a>
+            <div className='flex gap-1'>
+              <a href='https://www.instagram.com/zaurtango/' target='_blank'>
+                <Instagram />
+              </a>
+              &
+              <a href='https://www.instagram.com/zaur.mamedov.902/' target='_blank'>
+                <Instagram />
+              </a>
+            </div>
           </div>
         </div>
       </div>

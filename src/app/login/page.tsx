@@ -79,7 +79,7 @@ const LoginPage = () => {
           title="Login"
         />
         <p>Or sign in with: </p>
-        <Button onPress={handleGoogleLogin} className="my-2 p-2 rounded-none" isIconOnly variant="bordered"><GoogleLogoIcon /></Button>
+        <Button onPress={handleGoogleLogin} className="my-2 p-2 rounded-none" isIconOnly variant="light"><GoogleLogoIcon /></Button>
         <p className="text-sm text-center">
           Don&apos;t have an account yet?{" "}
           <Link href="/signup" className="underline">
