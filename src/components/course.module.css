@@ -1,0 +1,15 @@
+.accordionItem p {
+  margin: 5px 0;
+}
+.accordionItem ul {
+  list-style-type: decimal;
+  margin-left: 35px;
+}
+.accordionItem ul ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+.accordionItem ul ul ul {
+  list-style-type: circle;
+  margin-left: 20px;
+}

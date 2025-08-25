@@ -1,4 +1,7 @@
-@import "tailwindcss";
+/* @import "tailwindcss"; */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background: #faf3e4;
@@ -19,8 +22,38 @@
   }
 } */
 
+
+/* @font-face {
+  font-family: 'Qanelas';
+  src: url('/fonts/Qanelas/Qanelas-Thin.woff2') format('woff2'),
+       url('/fonts/Qanelas/Qanelas-Thin.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Qanelas';
+  src: url('/fonts/Qanelas/Qanelas-SemiBold.woff2') format('woff2'),
+       url('/fonts/Qanelas/Qanelas-SemiBold.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+} */
+
+@font-face {
+  font-family: 'Qanelas';
+  src: url('/fonts/Qanelas/Qanelas-Regular.woff2') format('woff2'),
+       url('/fonts/Qanelas/Qanelas-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Fragment Mono', monospace;
+  /* font-family: 'Fragment Mono', monospace; */
+  font-family: 'Qanelas', sans-serif;
+}
+
+.container {
+  margin: 0 auto;
 }

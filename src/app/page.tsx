@@ -1,17 +1,15 @@
-import Image from "next/image";
+import HomeAbout from "@/components/home/about";
+import Header from "@/components/home/header";
+import HomeCourses from "@/components/home/homeCourses";
+// import HomeProducts from "@/components/home/products";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen p-8 gap-18 sm:p-20">
-      <Image
-        src="/img/logo-light.png"
-        alt="Zaur Tango"
-        width={800}
-        height={800}
-        layout="stretch"
-        objectFit="cover"
-      />
-      <p className="text-sm md:text-2xl tracking-[10px]">COMING SOON...</p>
-    </div>
+    <>
+      <Header />
+      <HomeCourses />
+      <HomeAbout />
+      {/* <HomeProducts /> */}
+    </>
   );
 }

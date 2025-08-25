@@ -1,13 +1,16 @@
-import type { Metadata } from "next";
-import { Fragment_Mono } from "next/font/google";
 import "./globals.css";
+import type { Metadata } from "next";
 
-const monoFont = Fragment_Mono({
-  variable: "--font-family",
-  weight: ['400'],
-  style: ['normal', 'italic'],
-  subsets: ['latin'],
-})
+import { Providers } from "@/providers/providers";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+
+// const quicksand = Quicksand({
+//   variable: "--font-family",
+//   weight: ['500'],
+//   style: ['normal'],
+//   subsets: ['latin'],
+// })
 
 export const metadata: Metadata = {
   title: "Zaur Tango",
@@ -21,10 +24,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${monoFont.variable} antialiased`}
-      >
-        {children}
+      <body className="antialiased">
+        <Providers>
+          <Navbar />
+          <div className="pt-[70px] min-h-[80vh]">{children}</div>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
