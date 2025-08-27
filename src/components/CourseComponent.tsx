@@ -86,7 +86,8 @@ export default function CourseComponent() {
 
   // const handleCopy = async () => {
   //   console.log('pressed')
-  //   await copyFirestoreDocument('courses', 'prod_SWs9OAdYsA1oA2', 'courses', 'prod_Svvlc1x2LT8x1g');
+  //   // old id -> new id
+  //   await copyFirestoreDocument('courses', 'prod_Svsem0WsexRcdr', 'courses', 'prod_SvtqlfbCbps8Dh');
   //   console.log('clonning done')
   // }
 
