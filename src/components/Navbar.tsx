@@ -46,38 +46,16 @@ const Navbar = () => {
               <Spinner color="default" size="sm" />
             </Button> 
           : (
-            <Link href={user ? '/profile' : '/login'}>
+            <Link aria-label="login dashboard" href={user ? '/profile' : '/login'}>
               <Button color='default' variant='light' size='sm'>
                 <User />
               </Button>
             </Link>
-          //   <Dropdown className="bg-amber-50">
-          //     <DropdownTrigger>
-          //       <Button color='default' variant='light' size='sm'>
-          //         <User />
-          //       </Button>
-          //     </DropdownTrigger>
-          //     <DropdownMenu aria-label="Static Actions">
-          //       <DropdownItem key="profile">
-          //         <Link className="inline-block w-full" href="/profile">Profile</Link>
-          //       </DropdownItem>
-          //       {/* <DropdownItem key="settings">
-          //         <Link className="inline-block w-full" href="/profile/settings">Settings</Link>
-          //       </DropdownItem> */}
-          //       <DropdownItem key="logout" onPress={logout}>
-          //         Logout
-          //       </DropdownItem>
-          //     </DropdownMenu>
-          //   </Dropdown>
-          // ) : (
-          //   <Button color='default' variant='light' size='sm'>
-          //     <Link href="/login"><User /></Link>
-          //   </Button>
           )}
         </div>
 
         {/* Mobile Menu Button */}
-        <button className="md:hidden p-2 order-1 md:order-4" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+        <button aria-label="nav menu" className="md:hidden p-2 order-1 md:order-4" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {isMenuOpen ? <X /> : <AlignLeft />}
         </button>
       </div>

@@ -25,7 +25,6 @@ export default function CourseComponent() {
   const params = useParams();
 
   useEffect(() => {
-    // console.log(userData);
     const fetchCourse = async () => {
       try {
         const coursesRef = collection(db, "courses");
@@ -175,6 +174,7 @@ export default function CourseComponent() {
           </div>
           {courseData?.videos ? (
             <Accordion
+              selectionMode="multiple"
               isDisabled={
                 !subscriptions?.some(
                   (sub) => sub?.product?.id === courseData?.id

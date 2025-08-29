@@ -14,7 +14,15 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Zaur Tango",
-  description: "Zaur Tango | personal website | dance lessons | dance classes | dance clothes | dance shoes",
+  description: "Zaur Tango - Dance lessons, dance classes, dance clothes, personal website",
+  keywords: [
+    "Zaur Tango",
+    "dance lessons",
+    "personal website",
+    "dance classes",
+    "dance clothes",
+    "tango",
+  ]
 };
 
 export default function RootLayout({
