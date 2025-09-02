@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { addToast, Button, Form, Input, Spinner, Textarea } from "@heroui/react";
+import Link from "next/link";
 
 
 export default function ContactPage() {
@@ -100,9 +101,9 @@ export default function ContactPage() {
 
           <div className="flex flex-col md:flex-row gap-4 my-8">
             <p className="text-xs text-gray-500 w-full md:w-1/2">
-              By sending your message, you agree to accept the General Terms and
-              Conditions of Use and that your data will be processed in
-              compliance with the Privacy Policy of Zaur Tango.
+              By sending your message, you agree to accept the General <Link href='/terms' className="underline">Terms and
+              Conditions</Link> of Use and that your data will be processed in
+              compliance with the <Link href='/privacy-policy' className="underline">Privacy Policy</Link> of Zaur Tango.
             </p>
             <div className="w-full md:w-1/2 flex justify-end">
               <Button
