@@ -1,15 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { Accordion, AccordionItem, Button, Spinner, Tooltip } from "@heroui/react";
+import { Accordion, AccordionItem, Tooltip } from "@heroui/react";
 import { useAuthStore } from "@/store/authStore";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import Player from "./Player";
 import { CourseProps, StripeSubscription } from "@/app/types";
 import { db } from "@/lib/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import s from "./course.module.css";
-import startCheckout from "@/api/startCheckout";
+// import startCheckout from "@/api/startCheckout";
 import getUserStripeSubscriptions from "@/api/getUserStripeSubscriptions";
 import { Lock } from "lucide-react";
 // import copyFirestoreDocument from "@/api/copyFirebaseDoc";
@@ -17,11 +17,11 @@ import { Lock } from "lucide-react";
 export default function CourseComponent() {
   const [courseData, setCourseData] = useState({} as CourseProps | undefined);
   const [loadingCourses, setLoadingCourses] = useState(true);
-  const [loadingCheckoutBtn, setLoadingCheckoutBtn] = useState(false);
+  // const [loadingCheckoutBtn, setLoadingCheckoutBtn] = useState(false);
   const [subscriptions, setSubscriptions] =
     useState<Array<StripeSubscription> | null>(null);
   const { user } = useAuthStore();
-  const router = useRouter();
+  // const router = useRouter();
   const params = useParams();
 
   useEffect(() => {
@@ -70,18 +70,18 @@ export default function CourseComponent() {
   //   console.log(courseData)
   // }, [subscriptions, courseData]);
 
-  const handleSubscribe = async () => {
-    if (user) {
-      try {
-        setLoadingCheckoutBtn(true);
-        await startCheckout(courseData?.priceId as string);
-      } catch (error) {
-        console.log(`An error occurred: ${error}`);
-      }
-    } else {
-      router.push("/login");
-    }
-  };
+  // const handleSubscribe = async () => {
+  //   if (user) {
+  //     try {
+  //       setLoadingCheckoutBtn(true);
+  //       await startCheckout(courseData?.priceId as string);
+  //     } catch (error) {
+  //       console.log(`An error occurred: ${error}`);
+  //     }
+  //   } else {
+  //     router.push("/login");
+  //   }
+  // };
 
   // const handleCopy = async () => {
   //   console.log('pressed')
@@ -149,18 +149,19 @@ export default function CourseComponent() {
           <p className="italic">{courseData?.description}</p>
           {courseData &&
           !subscriptions?.some((sub) => sub?.product?.id === courseData?.id) ? (
-            <Button
-              variant="solid"
-              onPress={handleSubscribe}
-              disabled={loadingCheckoutBtn}
-              className="self-end w-full md:w-[170px] bg-gray-800 text-amber-50 rounded-none"
-            >
-              {loadingCheckoutBtn ? (
-                <Spinner size="sm" color="default" />
-              ) : (
-                "Subscribe"
-              )}
-            </Button>
+            // <Button
+            //   variant="solid"
+            //   onPress={handleSubscribe}
+            //   disabled={loadingCheckoutBtn}
+            //   className="self-end w-full md:w-[170px] bg-gray-800 text-amber-50 rounded-none"
+            // >
+            //   {loadingCheckoutBtn ? (
+            //     <Spinner size="sm" color="default" />
+            //   ) : (
+            //     "Subscribe"
+            //   )}
+            // </Button>
+            null
           ) : null}
         </div>
         <div>
