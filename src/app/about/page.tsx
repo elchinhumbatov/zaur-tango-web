@@ -1,6 +1,11 @@
 import Image from "next/image";
 import React from "react";
 
+export const metadata = {
+  title: "About Me | Zaur Tango",
+  description: "Learn more about Zaur's journey from overcoming asthma to embracing dance as a form of self-expression and healing.",
+};
+
 export default function About() {
   return (
     <div className="container mx-auto px-4 py-12">

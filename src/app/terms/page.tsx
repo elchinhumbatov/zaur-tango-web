@@ -1,5 +1,10 @@
 import React from "react";
 
+export const metadata = {
+  title: "Terms & Conditions | ZaurTango",
+  description: "Read the Terms & Conditions for using ZaurTango services.",
+};
+
 const TermsAndConditions = () => {
   return (
     <div className="max-w-4xl mx-auto p-6 text-gray-800 dark:text-gray-100">

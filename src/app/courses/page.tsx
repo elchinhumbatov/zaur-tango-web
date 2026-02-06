@@ -2,6 +2,10 @@
 import React from "react";
 import CoursesComponent from "@/components/CoursesComponent";
 
+export const metadata = {
+  title: "Courses | Zaur Tango",
+  description: "Explore our range of Argentine tango courses designed to help you connect with yourself and express your freedom through movement.",
+};
 
 export default function Courses() {
   return (
