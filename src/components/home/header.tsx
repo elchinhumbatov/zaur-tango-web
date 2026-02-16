@@ -18,7 +18,7 @@ export default function Header() {
         // placeholder='blur'
         // blurDataURL="/img/hero.jpg"
       />
-      <h1 className="text-2xl sm:text-4xl z-10 absolute bottom-0 left-[3%] p-4 w-full text-gray-700">
+      <h1 className="text-2xl sm:text-4xl z-10 absolute bottom-0 left-[3%] p-4 w-full">
         Tango is not about steps.
         <br />
         It is about presence, center, and connection.
