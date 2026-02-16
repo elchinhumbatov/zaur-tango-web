@@ -17,7 +17,7 @@ export default function SectionTitle({
 }) {
   return (
     <>
-      <div className="text-center my-9 width-full lg:w-1/2 mx-auto">
+      <div className="text-center my-9 w-full lg:w-2/3 mx-auto">
         <h2 className="text-4xl">{heading}</h2>
         <p className="my-3 text-default-500">{subheading}</p>
         {url && ( <Link href={url} className="text-xs uppercase underline underline-offset-[6px] hover:no-underline" target={target}>

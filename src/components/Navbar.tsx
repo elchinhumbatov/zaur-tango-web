@@ -9,10 +9,11 @@ import { useAuthStore } from "@/store/authStore";
 
 const links = [
   { name: "Home", path: "/" },
+  // { name: "Video Library", path: "/video-library" },
   { name: "Courses", path: "/courses" },
   { name: "About", path: "/about" },
   // { name: "Products", path: "/products" },
-  { name: "Contact", path: "/contact" },
+  { name: "Work With Me", path: "/contact" },
 ];
 
 const Navbar = () => {

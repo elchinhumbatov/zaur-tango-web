@@ -2,7 +2,7 @@ import GetInTouchForm from "./GetInTouchForm";
 
 
 export const metadata = {
-  title: "Contact Us | Zaur Tango",
+  title: "Work With Me | Zaur Tango",
   description: "Get in touch with Zaur Tango for inquiries, support, or feedback. We're here to help you with all your needs.",
 };
 
@@ -10,7 +10,7 @@ export const metadata = {
 export default function ContactPage() {
   return (
     <div className="container mx-auto px-4 py-12">
-      <h2 className="text-3xl font-medium text-center mb-8">CONTACT US</h2>
+      <h2 className="text-3xl font-medium text-center mb-8">Work With Me</h2>
       <div className="mb-8 flex gap-2 flex-col">
         <div>
           <p className="text-md">
@@ -28,6 +28,14 @@ export default function ContactPage() {
               {" "}
               support@zaurtango.com
             </a>
+          </p>
+        </div>
+        <div>
+          <p className="text-md">
+            <b>Workshops:</b> <i>Coming Soon</i>
+          </p>
+          <p className="text-md">
+            <b>Tango Retreats:</b> <i>Coming Soon</i>
           </p>
         </div>
       </div>
