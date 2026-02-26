@@ -186,7 +186,7 @@ export default function CourseComponent() {
                 <AccordionItem
                   key={index}
                   aria-label={`Accordion ${index + 1}`}
-                  title={video?.title}
+                  title={index + 1 + '. ' + video?.title}
                 >
                   {courseData &&
                     subscriptions &&

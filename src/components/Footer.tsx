@@ -16,7 +16,7 @@ export default function Footer() {
           </div>
 
           <div className='order-1 sm:order-2'>
-            <Image src='/img/logo-light.png' alt='logo' width={150} height={50} />
+            <Image src='/img/logo-zaur.png' alt='logo' width={150} height={50} />
           </div>
           
           <div className='order-2 text-center sm:text-left'>

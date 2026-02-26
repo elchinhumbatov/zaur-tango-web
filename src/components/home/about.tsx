@@ -7,22 +7,17 @@ export default function HomeAbout() {
       <div className="mx-auto py-10 px-5">
         <SectionTitle
           heading="About Me"
-          subheading="My name is Zaur, and my journey to dance was far from easy."
+          subheading=""
           url="/about"
           btnTitle="Read more"
         />
         <div>
           <div className="w-full lg:w-1/2 m-auto">
-            <p className="text-default-500 leading-8">
-              When I teach dance, I pass on not just techniques and steps. I
-              share a life experience — the experience of interacting with
-              oneself on a deep level — when body and spirit work as one, when
-              fears transform into strength, and limitations become starting
-              points for growth. My method is built on an understanding of
-              psychosomatic processes — I help each person find their rhythm,
-              open their breath, and learn to listen to themselves. Just as
-              dance once helped me find freedom, now it helps others open up and
-              feel life to the fullest.
+            <p className="text-default-500 leading-8 text-center">
+              My school is martial arts. My language is geometry. My foundation
+              is the Center. I don’t decorate the moves. I strip them down to
+              their essence. I don’t play with emotion. I assemble intention. I
+              don’t lose my axis. I build it, step by step. 
             </p>
           </div>
         </div>
