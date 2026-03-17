@@ -10,7 +10,7 @@ export default function HomeCourses() {
       <div className='container mx-auto'>
         <SectionTitle 
           heading='Courses' 
-          subheading='Many see emotions in tango. Isee a structure that allows emotions to resonate.
+          subheading='Many see emotions in tango. I see a structure that allows emotions to resonate.
           Many see freedom. I see a center through which freedom becomes posible.
           Many see beauty. I see pattern and order. And all of these is part of my personal philosphy of tango: 
           movement must be proportionate, the center must be stable, energy must be directed.'

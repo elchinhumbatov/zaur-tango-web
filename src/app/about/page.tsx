@@ -97,7 +97,7 @@ export default function About() {
             </p>
           </div>
           <Image
-            src="/img/about_me_2.jpeg"
+            src="/img/about_me_2.jpg"
             alt="About Me"
             className="w-full md:w-1/2 h-auto mt-6 md:mt-0"
             width={500}

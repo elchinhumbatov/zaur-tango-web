@@ -4,7 +4,6 @@ import Image from "next/image";
 import { Accordion, AccordionItem, Tooltip } from "@heroui/react";
 import { useAuthStore } from "@/store/authStore";
 import { useParams } from "next/navigation";
-import Player from "./Player";
 import { CourseProps, StripeSubscription } from "@/app/types";
 import { db } from "@/lib/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -12,6 +11,7 @@ import s from "./course.module.css";
 // import startCheckout from "@/api/startCheckout";
 import getUserStripeSubscriptions from "@/api/getUserStripeSubscriptions";
 import { Lock } from "lucide-react";
+import MuxPlayerWrapper from "./MuxPlayer";
 // import copyFirestoreDocument from "@/api/copyFirebaseDoc";
 
 export default function CourseComponent() {
@@ -192,7 +192,7 @@ export default function CourseComponent() {
                     subscriptions &&
                     subscriptions.some(
                       (sub) => sub?.product?.id == courseData?.id
-                    ) && <Player playbackId={video.url} />}
+                    ) && <MuxPlayerWrapper playbackId={video.url} />}
                   <p
                     className={`mb-8 text-gray-600 ${s.accordionItem}`}
                     dangerouslySetInnerHTML={{

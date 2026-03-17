@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Suspense } from "react";
 import SectionTitle from "./title";
+import StorageVideo, { StorageVideoPlaceholder } from "../StorageVideo";
 
-const videoUrl =
-  "https://firebasestorage.googleapis.com/v0/b/zaur-tango.firebasestorage.app/o/video%2Ftango-in-woman.mp4?alt=media&token=4101ed12-36cc-4270-aa4d-ee241bb5007e";
+const videoStoragePath = "video/tango-in-woman.mp4";
 
 export default function HomeWomanInTango() {
   return (
@@ -40,10 +40,9 @@ export default function HomeWomanInTango() {
           url=""
           btnTitle=""
         />
-        <video height={300} autoPlay muted loop playsInline className="w-full">
-          <source src={videoUrl} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <Suspense fallback={<StorageVideoPlaceholder />}>
+          <StorageVideo storagePath={videoStoragePath} />
+        </Suspense>
       </div>
     </section>
   );
