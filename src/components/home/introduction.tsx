@@ -2,22 +2,28 @@ import { Suspense } from "react";
 import StorageVideo, { StorageVideoPlaceholder } from "../StorageVideo";
 import SectionTitle from "./title";
 
-const videoStoragePath = "video/introduction.mp4";
+const videoStoragePath = "video/introduction-horizontal.mp4";
+// const videoStoragePath = "video/introduction.mp4";
 
 export default function Introduction() {
   return (
     <section className="py-10 px-5">
       <div className="container mx-auto">
         <SectionTitle
-          heading="Welcome to Zaur Tango"
+          heading="It is about presence, center, and connection."
           subheading=""
           url=""
           btnTitle=""
         />
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="w-full mt-8 mx-auto">
+          <Suspense fallback={<StorageVideoPlaceholder />}>
+            <StorageVideo storagePath={videoStoragePath} controls={true} loop={false} />
+          </Suspense>
+        </div>
+        {/* <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="w-full md:w-1/3 lg:w-1/4 mt-8 mx-auto">
             <Suspense fallback={<StorageVideoPlaceholder />}>
-              <StorageVideo storagePath={videoStoragePath} controls={true} />
+              <StorageVideo storagePath={videoStoragePath} controls={true} loop={false} />
             </Suspense>
           </div>
           <p className="w-full md:w-1/2">
@@ -34,7 +40,7 @@ export default function Introduction() {
             itaque sapiente voluptas architecto! A illum vitae exercitationem
             distinctio.
           </p>
-        </div>
+        </div> */}
       </div>
     </section>
   );

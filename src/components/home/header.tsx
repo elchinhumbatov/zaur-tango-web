@@ -8,10 +8,9 @@ export default function Header() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    const intervalMs = 5000; // 3-5 seconds is a good range for a slideshow
     const id = window.setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % images.length);
-    }, intervalMs);
+    }, 10000);
 
     return () => window.clearInterval(id);
   }, [images.length]);
@@ -21,10 +20,12 @@ export default function Header() {
       {images.map((src, index) => (
         <Image
           key={src}
-          className={`absolute inset-0 ${s.zoomInOutBox} mt-[64px] transition-opacity duration-1000 ease-in-out ${
-            index === activeIndex ? "opacity-100" : "opacity-0"
-          }`}
-          style={{ objectFit: src === '/img/hero.jpg' ? 'cover' : 'contain' }}
+          className={`
+            absolute inset-0 mt-[64px] transition-opacity duration-[2000ms] ease-in-out 
+            ${s.zoomInOutBox}
+            ${src === '/img/hero.jpg' ? 'object-cover' : 'object-contain'} 
+            ${index === activeIndex ? "opacity-100" : "opacity-0"}
+          `}
           src={src}
           alt="Zaur Tango"
           fill
@@ -32,10 +33,10 @@ export default function Header() {
         />
       ))}
 
-      <h1 className="text-2xl sm:text-4xl z-10 absolute bottom-0 left-[3%] p-4 w-full">
+      <h1 className="text-3xl sm:text-4xl z-10 absolute bottom-0 p-4 w-full text-center">
         Tango is not about steps.
-        <br />
-        It is about presence, center, and connection.
+        {/* <br /> */}
+        {/* It is about presence, center, and connection. */}
       </h1>
 
       <div className="absolute w-screen h-[20vh] bottom-[-5px] bg-gradient-to-b from-transparent to-[var(--background)] bg-opacity-25" />
