@@ -2,11 +2,17 @@ import { getVideoDownloadURL } from "@/utils/firebaseVideoUtils";
 
 export default async function StorageVideo({
   storagePath,
+  poster,
   controls = false,
+  muted = true,
+  autoPlay = true,
   loop = true,
 }: {
   storagePath: string;
+  poster?: string;
   controls?: boolean;
+  muted?: boolean;
+  autoPlay?: boolean;
   loop?: boolean;
 }) {
   const src = await getVideoDownloadURL(storagePath);
@@ -14,10 +20,11 @@ export default async function StorageVideo({
   return (
     <video
       preload="auto"
+      poster={poster}
       aria-label="Video player"
-      muted
+      muted={muted}
       controls={controls}
-      autoPlay
+      autoPlay={autoPlay}
       loop={loop}
       playsInline
       className="w-full"

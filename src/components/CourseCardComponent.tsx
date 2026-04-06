@@ -57,7 +57,7 @@ export default function CourseCardComponent({
             />
             </div>
             <p className="text-default-500">
-              {course.description.substring(0, 113) + "..."}
+              {course.description.substring(0, 95) + "..."}
             </p>
             <div className="flex flex-row items-center justify-end gap-3 mt-4">
               <p className="text-xs uppercase underline underline-offset-[6px] hover:no-underline">

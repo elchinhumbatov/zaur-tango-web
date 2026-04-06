@@ -1,3 +1,8 @@
+.accordionItem h3 {
+  font-size: large;
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
 .accordionItem p {
   margin: 5px 0;
 }

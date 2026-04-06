@@ -1,14 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { Accordion, AccordionItem, Tooltip } from "@heroui/react";
+import { Accordion, AccordionItem, Button, Spinner, Tooltip } from "@heroui/react";
 import { useAuthStore } from "@/store/authStore";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { CourseProps, StripeSubscription } from "@/app/types";
 import { db } from "@/lib/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import s from "./course.module.css";
-// import startCheckout from "@/api/startCheckout";
+import startCheckout from "@/api/startCheckout";
 import getUserStripeSubscriptions from "@/api/getUserStripeSubscriptions";
 import { Lock } from "lucide-react";
 import MuxPlayerWrapper from "./MuxPlayer";
@@ -17,11 +17,11 @@ import MuxPlayerWrapper from "./MuxPlayer";
 export default function CourseComponent() {
   const [courseData, setCourseData] = useState({} as CourseProps | undefined);
   const [loadingCourses, setLoadingCourses] = useState(true);
-  // const [loadingCheckoutBtn, setLoadingCheckoutBtn] = useState(false);
+  const [loadingCheckoutBtn, setLoadingCheckoutBtn] = useState(false);
   const [subscriptions, setSubscriptions] =
     useState<Array<StripeSubscription> | null>(null);
   const { user } = useAuthStore();
-  // const router = useRouter();
+  const router = useRouter();
   const params = useParams();
 
   useEffect(() => {
@@ -70,23 +70,23 @@ export default function CourseComponent() {
   //   console.log(courseData)
   // }, [subscriptions, courseData]);
 
-  // const handleSubscribe = async () => {
-  //   if (user) {
-  //     try {
-  //       setLoadingCheckoutBtn(true);
-  //       await startCheckout(courseData?.priceId as string);
-  //     } catch (error) {
-  //       console.log(`An error occurred: ${error}`);
-  //     }
-  //   } else {
-  //     router.push("/login");
-  //   }
-  // };
+  const handleSubscribe = async () => {
+    if (user) {
+      try {
+        setLoadingCheckoutBtn(true);
+        await startCheckout(courseData?.priceId as string);
+      } catch (error) {
+        console.log(`An error occurred: ${error}`);
+      }
+    } else {
+      router.push("/login");
+    }
+  };
 
   // const handleCopy = async () => {
   //   console.log('pressed')
   //   // old id -> new id
-  //   await copyFirestoreDocument('courses', 'prod_Svsem0WsexRcdr', 'courses', 'prod_SvtqlfbCbps8Dh');
+  //   await copyFirestoreDocument('courses', 'prod_SvvjyjdAPwFNrj', 'courses', 'prod_UHkGgVFw6SUhHx');
   //   console.log('clonning done')
   // }
 
@@ -145,40 +145,41 @@ export default function CourseComponent() {
           </>
         )}
         <div className="flex flex-col w-full md:w-3/4 m-auto my-10 gap-8">
-        {/* <Button onPress={handleCopy}>clone</Button> */}
+          {/* <Button onPress={handleCopy}>Clone course</Button> */}
           <p className="italic">{courseData?.description}</p>
           {courseData &&
-          !subscriptions?.some((sub) => sub?.product?.id === courseData?.id) ? (
-            // <Button
-            //   variant="solid"
-            //   onPress={handleSubscribe}
-            //   disabled={loadingCheckoutBtn}
-            //   className="self-end w-full md:w-[170px] bg-gray-800 text-amber-50 rounded-none"
-            // >
-            //   {loadingCheckoutBtn ? (
-            //     <Spinner size="sm" color="default" />
-            //   ) : (
-            //     "Subscribe"
-            //   )}
-            // </Button>
-            null
-          ) : null}
+          !subscriptions?.some((sub) => sub?.product?.id === courseData?.id)
+            ? <Button
+                variant="solid"
+                onPress={handleSubscribe}
+                disabled={loadingCheckoutBtn}
+                className="self-end w-full md:w-[170px] bg-gray-800 text-amber-50 rounded-none"
+              >
+                {loadingCheckoutBtn ? (
+                  <Spinner size="sm" color="default" />
+                ) : (
+                  "Subscribe"
+                )}
+              </Button>
+            : null}
         </div>
         <div>
           <div className="flex items-center mb-4 gap-2">
             <h3 className="text-xl">Course content </h3>
             {!subscriptions?.some(
-              (sub) => sub?.product?.id === courseData?.id
-            ) && <Tooltip content="You need to subscribe to access the course content">
-              <Lock size={18} />
-            </Tooltip>}
+              (sub) => sub?.product?.id === courseData?.id,
+            ) && (
+              <Tooltip content="You need to subscribe to access the course content">
+                <Lock size={18} />
+              </Tooltip>
+            )}
           </div>
           {courseData?.videos ? (
             <Accordion
               selectionMode="multiple"
               isDisabled={
                 !subscriptions?.some(
-                  (sub) => sub?.product?.id === courseData?.id
+                  (sub) => sub?.product?.id === courseData?.id,
                 )
               }
             >
@@ -186,12 +187,12 @@ export default function CourseComponent() {
                 <AccordionItem
                   key={index}
                   aria-label={`Accordion ${index + 1}`}
-                  title={index + 1 + '. ' + video?.title}
+                  title={index + 1 + ". " + video?.title}
                 >
                   {courseData &&
                     subscriptions &&
                     subscriptions.some(
-                      (sub) => sub?.product?.id == courseData?.id
+                      (sub) => sub?.product?.id == courseData?.id,
                     ) && <MuxPlayerWrapper playbackId={video.url} />}
                   <p
                     className={`mb-8 text-gray-600 ${s.accordionItem}`}

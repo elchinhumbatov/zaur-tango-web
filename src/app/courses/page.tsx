@@ -13,7 +13,7 @@ export default function Courses() {
       <div className="p-4 mx-auto mb-8 text-center w-full md:w-[80%] lg:w-[60%]">
         <h2 className="text-3xl font-medium text-center mb-8">Courses</h2>
         <p className="text-gray-600">
-          Many see emotions in tango. Isee a structure that allows emotions to resonate.
+          Many see emotions in tango. I see a structure that allows emotions to resonate.
           <br />
           Many see freedom. I see a center through which freedom becomes posible.
           <br />

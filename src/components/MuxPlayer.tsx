@@ -23,6 +23,7 @@ export default function MuxPlayerWrapper({playbackId}: {playbackId: string}) {
   return (
     <div>
       <MuxPlayer
+        preferPlayback="mse"
         playbackId={playbackId}
         tokens={{ playback: handleTokenGeneration() }}
         streamType="on-demand"

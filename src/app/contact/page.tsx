@@ -1,4 +1,5 @@
 import GetInTouchForm from "./GetInTouchForm";
+import { MessageCircle } from "lucide-react";
 
 
 export const metadata = {
@@ -18,6 +19,14 @@ export default function ContactPage() {
             <a href="tel:+971543962051" className="text-gray-700 underlined">
               {" "}
               +971 54 396 2051
+            </a>
+          </p>
+        </div>
+        <div>
+          <p className="flex text-md gap-1">
+            <b>Chat: </b> {" "}
+            <a href="https://wa.me/971543962051" className="text-gray-700 underlined flex items-center gap-1">
+              WhatsApp <MessageCircle size={19}/>
             </a>
           </p>
         </div>

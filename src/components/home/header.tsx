@@ -21,9 +21,9 @@ export default function Header() {
         <Image
           key={src}
           className={`
-            absolute inset-0 mt-[64px] transition-opacity duration-[2000ms] ease-in-out 
+            absolute inset-0 mt-[64px] transition-opacity duration-[2000ms] ease-in-out
             ${s.zoomInOutBox}
-            ${src === '/img/hero.jpg' ? 'object-cover' : 'object-contain'} 
+            ${src === '/img/hero.jpg' ? 'object-cover' : 'object-contain p-[50px]'} 
             ${index === activeIndex ? "opacity-100" : "opacity-0"}
           `}
           src={src}

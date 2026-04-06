@@ -16,8 +16,8 @@ export default function About() {
         <div>
           <Image
             src="/img/about_me.jpeg"
-            alt="About Me"
-            className="w-full md:w-1/2 h-auto float-left mt-2 mb-6 mr-0 md:mr-6"
+            alt="About Me image 1"
+            className="w-full md:w-1/2 lg:w-1/3 h-auto float-left mt-2 mb-6 mr-0 md:mr-6"
             width={500}
             height={500}
           />
@@ -70,7 +70,7 @@ export default function About() {
           <p className="text-gray-600 pb-3 italic">My method is based on a deep understanding of psychosomatics: I know how the body speaks to us through tension, tightness, and blocks. And I help people hear those messages. I help them breathe—not just with their lungs, but with their hearts. I help them move—not by the rules, but by their inner rhythm.</p>
           <p className="text-gray-600 pb-3 italic">Dance is not about steps. It’s about the freedom to be yourself. And if even one person, having touched this path, straightens their shoulders, lifts their head, and feels the breath of life open up in their chest—then everything I’ve been through was not in vain.</p> */}
         </div>
-        <div className="pt-12 flex flex-col md:flex-row items-start md:items-center gap-8">
+        <div className="pt-12 flex flex-col md:flex-row items-start md:items-center gap-8 w-full">
           <div>
             <h4 className="my-3 text-2xl">My Method</h4>
             <p>
@@ -98,8 +98,8 @@ export default function About() {
           </div>
           <Image
             src="/img/about_me_2.jpg"
-            alt="About Me"
-            className="w-full md:w-1/2 h-auto mt-6 md:mt-0"
+            alt="About Me image 2"
+            className="w-full md:w-1/2 lg:w-1/3 h-auto mt-6 md:mt-0"
             width={500}
             height={500}
           />
