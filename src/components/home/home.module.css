@@ -26,8 +26,8 @@
   }
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .zoomInOutBox {
     animation: zoom-in-zoom-out-mob 20s linear infinite;
   }
-}
+} */

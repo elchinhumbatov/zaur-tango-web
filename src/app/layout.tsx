@@ -35,7 +35,7 @@ export default function RootLayout({
       <body className="antialiased">
         <Providers>
           <Navbar />
-          <div className="pt-[70px] min-h-[80vh]">{children}</div>
+          <div className="pt-[66px] min-h-[80vh]">{children}</div>
           <Footer />
         </Providers>
       </body>
