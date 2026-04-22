@@ -3,6 +3,7 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getFunctions } from "firebase/functions";
 import { getStorage } from "firebase/storage";
+// import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "firebase/app-check";
 
 
 const firebaseConfig = {
@@ -15,6 +16,20 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+
+if (typeof window !== 'undefined') {
+  import('firebase/app-check').then(({ initializeAppCheck, ReCaptchaEnterpriseProvider }) => {
+    initializeAppCheck(app, {
+      provider: new ReCaptchaEnterpriseProvider(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""),
+      isTokenAutoRefreshEnabled: true
+    });
+  });
+}
+// initializeAppCheck(app, {
+//   provider: new ReCaptchaEnterpriseProvider(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""),
+//   isTokenAutoRefreshEnabled: true
+// });
+
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const functions = getFunctions(app, "us-central1");

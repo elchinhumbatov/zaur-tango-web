@@ -1,7 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { Accordion, AccordionItem, Button, Spinner, Tooltip } from "@heroui/react";
+import {
+  Accordion,
+  AccordionItem,
+  Button,
+  Spinner,
+  Tooltip,
+} from "@heroui/react";
 import { useAuthStore } from "@/store/authStore";
 import { useParams, useRouter } from "next/navigation";
 import { CourseProps, StripeSubscription } from "@/app/types";
@@ -77,6 +83,8 @@ export default function CourseComponent() {
         await startCheckout(courseData?.priceId as string);
       } catch (error) {
         console.log(`An error occurred: ${error}`);
+      } finally {
+        setLoadingCheckoutBtn(false);
       }
     } else {
       router.push("/login");
@@ -86,7 +94,7 @@ export default function CourseComponent() {
   // const handleCopy = async () => {
   //   console.log('pressed')
   //   // old id -> new id
-  //   await copyFirestoreDocument('courses', 'prod_SvvjyjdAPwFNrj', 'courses', 'prod_UHkGgVFw6SUhHx');
+  //   await copyFirestoreDocument('courses', 'prod_UHkGgVFw6SUhHx', 'courses');
   //   console.log('clonning done')
   // }
 
@@ -148,26 +156,33 @@ export default function CourseComponent() {
           {/* <Button onPress={handleCopy}>Clone course</Button> */}
           <p className="italic">{courseData?.description}</p>
           {courseData &&
-          !subscriptions?.some((sub) => sub?.product?.id === courseData?.id)
-            ? <Button
+          !subscriptions?.some((sub) => sub?.product?.id === courseData?.stripeProductId) ? (
+            <div className="self-end flex flex-col items-end">
+              <p className="text-xl">
+                <span className="line-through text-base text-gray-500">{courseData?.oldPrice}$</span> {courseData?.price}$
+                <span className="text-xs"> for 60 days</span>
+              </p>
+
+              <Button
                 variant="solid"
                 onPress={handleSubscribe}
-                disabled={loadingCheckoutBtn}
-                className="self-end w-full md:w-[170px] bg-gray-800 text-amber-50 rounded-none"
+                disabled={loadingCheckoutBtn || courseData?.status !== 'active'}
+                className="w-full md:w-[170px] bg-gray-800 text-amber-50 rounded-none disabled:bg-gray-400 disabled:text-gray-700 disabled:cursor-not-allowed"
               >
                 {loadingCheckoutBtn ? (
                   <Spinner size="sm" color="default" />
                 ) : (
-                  "Subscribe"
+                  "Subscribe now"
                 )}
               </Button>
-            : null}
+            </div>
+          ) : null}
         </div>
         <div>
           <div className="flex items-center mb-4 gap-2">
             <h3 className="text-xl">Course content </h3>
             {!subscriptions?.some(
-              (sub) => sub?.product?.id === courseData?.id,
+              (sub) => sub?.product?.id === courseData?.stripeProductId,
             ) && (
               <Tooltip content="You need to subscribe to access the course content">
                 <Lock size={18} />
@@ -179,7 +194,7 @@ export default function CourseComponent() {
               selectionMode="multiple"
               isDisabled={
                 !subscriptions?.some(
-                  (sub) => sub?.product?.id === courseData?.id,
+                  (sub) => sub?.product?.id === courseData?.stripeProductId,
                 )
               }
             >
@@ -192,7 +207,7 @@ export default function CourseComponent() {
                   {courseData &&
                     subscriptions &&
                     subscriptions.some(
-                      (sub) => sub?.product?.id == courseData?.id,
+                      (sub) => sub?.product?.id == courseData?.stripeProductId,
                     ) && <MuxPlayerWrapper playbackId={video.url} />}
                   <p
                     className={`mb-8 text-gray-600 ${s.accordionItem}`}

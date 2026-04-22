@@ -13,13 +13,11 @@ function Signup() {
   const [loading, setLoading] = useState(false);
 
   const handleSignup = async (
-    e: React.FormEvent,
     email: string,
     password: string,
     confirmPassword: string,
     fullName: string,
   ) => {
-    e.preventDefault();
     setError(null);
 
     if (password.length < 8) {

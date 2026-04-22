@@ -7,7 +7,9 @@ export type CourseProps = {
   imagesUrl: Array<string>;
   backgroundUrl: string;
   status: string;
+  oldPrice?: number;
   price: number;
+  stripeProductId: string;
   priceId: string;
   url: string;
   duration: number;

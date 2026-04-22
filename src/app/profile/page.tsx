@@ -40,7 +40,7 @@ const Profile = () => {
           }));
 
           const filteredCourses = coursesData.filter((course) =>
-            subscriptions.some((sub: any) => sub.product.id === course.id)
+            subscriptions.some((sub: any) => sub.product.id === course.stripeProductId)
           );
           setSubscribedCourses(filteredCourses);
         } catch (error) {
@@ -81,7 +81,7 @@ const Profile = () => {
 
   return (
     <div className="container py-20 px-5">
-      <div className="flex items-start justify-between mb-6">
+      <div className="flex items-start justify-between mb-10">
         <div>
           <h2 className="text-2xl font-bold">
             Welcome, {userData?.fullName || "User"}!
@@ -120,7 +120,7 @@ const Profile = () => {
       </div>
 
       <div>
-        <h3 className="text-xl font-semibold mb-3">Purchased Courses</h3>
+        <h3 className="text-xl font-semibold">Subscribed Courses</h3>
         {loadingCourses && (
           <div className="flex gap-5 justify-center">
             <CourseSkeleton />
@@ -129,7 +129,7 @@ const Profile = () => {
         <div className="flex flex-wrap gap-8 m-auto align-center justify-center md:justify-start">
           {subscriptions ? (
             subscribedCourses.map((course) => {
-              const subscriptionItem: any = subscriptions.find((item: any) => item.product.id === course.id);
+              const subscriptionItem: any = subscriptions.find((item: any) => item.product.id === course?.stripeProductId);
               return (
                 <div key={course.id}>
                   <CourseCardComponent 

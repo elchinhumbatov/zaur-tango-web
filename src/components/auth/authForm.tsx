@@ -4,11 +4,10 @@ import React, { useState } from "react";
 
 interface AuthFormProps {
   formSubmitAction: (
-    event: React.FormEvent<HTMLFormElement>,
     email: string,
     password: string,
     confirmPassword: string,
-    fullName: string
+    fullName: string,
   ) => void;
   error: string | null;
   loading?: boolean;
@@ -27,7 +26,8 @@ export default function AuthForm({
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    formSubmitAction(e, email, password, confirmPassword, fullName);
+    e.preventDefault();
+    formSubmitAction(email, password, confirmPassword, fullName);
   };
 
   return (
@@ -77,11 +77,13 @@ export default function AuthForm({
         />
       ) : null}
 
-      {error && <p className="text-red-500 text-sm">{error}</p>}
-
       {title === "Login" ? (
-        <Link href='/forgot-password' className="text-sm">Forgot Password?</Link>
+        <Link href="/forgot-password" className="text-sm">
+          Forgot Password?
+        </Link>
       ) : null}
+      
+      {error && <p className="text-red-500 text-sm">{error}</p>}
 
       <button
         type="submit"

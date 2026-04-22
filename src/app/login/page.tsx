@@ -16,21 +16,14 @@ const LoginPage = () => {
   const router = useRouter();
 
   const handleLogin = async (
-    e: React.FormEvent,
     email: string,
     password: string
   ) => {
-    e.preventDefault();
     setLoading(true);
     try {
       await login(email, password);
       await syncUserData()
 
-    // const unsub = onSnapshot(doc(db, "cities", "SF"), (doc) => {
-    //   const source = doc.metadata.hasPendingWrites ? "Local" : "Server";
-    //   console.log(source, " data: ", doc.data());
-    // });
-      // console.log(user)
       router.push("/profile");
     } catch (err: unknown) {
       if (err instanceof Error) {

@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import StorageVideo, { StorageVideoPlaceholder } from "../StorageVideo";
-import SectionTitle from "./title";
 
 const videoStoragePath = "video/introduction-horizontal.mp4";
 
@@ -8,12 +7,12 @@ export default function Introduction() {
   return (
     <section className="py-10 px-5">
       <div className="container mx-auto">
-        <SectionTitle
+        {/* <SectionTitle
           heading="It is about presence, center, and connection."
           subheading=""
           url=""
           btnTitle=""
-        />
+        /> */}
         <div className="w-full mt-8 mx-auto">
           <Suspense fallback={<StorageVideoPlaceholder />}>
             <StorageVideo

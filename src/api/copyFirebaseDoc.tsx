@@ -6,7 +6,7 @@ async function copyFirestoreDocument(
   sourceCollection: string,
   sourceDocId: string,
   destinationCollection: string,
-  newDocId: string // Or let Firestore generate one
+  newDocId?: string // Or let Firestore generate one
 ) {
   try {
     // 1. Get a reference to the source document
@@ -19,7 +19,7 @@ async function copyFirestoreDocument(
       const dataToCopy = sourceDocSnap.data();
 
       // 3. Get a reference to the new destination document
-      const newDocRef = doc(db, destinationCollection, newDocId); // Use newDocId or generate a new one
+      const newDocRef = doc(db, destinationCollection); // Use newDocId or generate a new one
 
       // 4. Write the copied data to the new document
       await setDoc(newDocRef, dataToCopy);

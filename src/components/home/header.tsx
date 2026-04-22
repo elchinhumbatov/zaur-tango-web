@@ -5,6 +5,7 @@ import s from "./home.module.css";
 
 export default function Header() {
   const images = useMemo(() => ["/img/hero_2.png", "/img/hero.jpg"], []);
+  const phrases = useMemo(() => ["Tango is not about steps.", "It is about presence, center, and connection."], []);
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
@@ -33,10 +34,20 @@ export default function Header() {
         />
       ))}
 
-      <h1 className="text-3xl sm:text-4xl z-10 absolute bottom-0 p-4 w-full text-center">
-        Tango is not about steps.
-        {/* <br /> */}
-        {/* It is about presence, center, and connection. */}
+      <h1 className={`z-10 absolute bottom-0 p-4 w-full
+        ${s.zoomInOutBox}`}>
+          {phrases.map((phrase, index) => (
+            <span
+              key={index}
+              className={`
+                sm:text-4xl transition-opacity duration-[2000ms] ease-in-out text-center block p-2
+                ${index === activeIndex ? "opacity-100" : "opacity-0"}
+                ${index === 1 ? "mb-5 text-lg" : "mb-[-70px] text-2xl"}
+              `}
+            >
+              {phrase}
+            </span>
+          ))}
       </h1>
 
       <div className="absolute w-screen h-[20vh] bottom-[-5px] bg-gradient-to-b from-transparent to-[var(--background)] bg-opacity-25" />
