@@ -63,7 +63,6 @@ export default function Header2() {
             />
           );
         })}
-        <div className="absolute inset-0 bg-black/40" />
       </div>
 
       <div className="relative flex h-full items-end justify-center px-4 pb-8 sm:px-8 sm:pb-10">
