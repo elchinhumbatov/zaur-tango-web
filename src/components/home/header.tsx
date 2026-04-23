@@ -67,14 +67,14 @@ export default function Header2() {
       </div>
 
       <div className="relative flex h-full items-end justify-center px-4 pb-8 sm:px-8 sm:pb-10">
-        <div className="w-full max-w-5xl px-4 py-5 sm:py-1 text-center z-50">
+        <div className="w-full max-w-5xl px-4 py-4 sm:py-1 text-center z-10">
           <p className="mx-auto max-w-3xl text-2xl font-semibold sm:text-4xl">
             {slides[activeIndex].text}
           </p>
         </div>
       </div>
 
-      <div className="absolute w-screen h-[20vh] bottom-[-5px] bg-gradient-to-b from-transparent to-[var(--background)] bg-opacity-25" />
+      <div className="absolute w-screen h-[20vh] bottom-[-5px] bg-gradient-to-b from-transparent to-[var(--background)] bg-opacity-30" />
     </section>
   );
 }
