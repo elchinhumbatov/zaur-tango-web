@@ -179,7 +179,7 @@ export default function CourseComponent() {
           ) : null}
         </div>
         <div>
-          <div className="flex items-center mb-4 gap-2">
+          <div className="flex items-center gap-2">
             <h3 className="text-xl">Course content </h3>
             {!subscriptions?.some(
               (sub) => sub?.product?.id === courseData?.stripeProductId,
@@ -188,6 +188,12 @@ export default function CourseComponent() {
                 <Lock size={18} />
               </Tooltip>
             )}
+          </div>
+          <div className="mb-4">
+            <small className="text-default-500">
+              {courseData?.videos.length}{" "}
+              {courseData?.videos.length == 1 ? "Video Lesson" : "Video Lessons"}
+            </small>
           </div>
           {courseData?.videos ? (
             <Accordion

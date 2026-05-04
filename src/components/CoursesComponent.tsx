@@ -35,7 +35,11 @@ export default function CoursesComponent() {
   }, []);
 
   if (loadingCourses) {
-    return <div className="flex gap-5 justify-center"><CourseSkeleton /><CourseSkeleton /><CourseSkeleton /></div>;
+    return <div className="flex flex-wrap gap-8 m-auto justify-center align-center">
+      <CourseSkeleton />
+      <CourseSkeleton />
+      <CourseSkeleton />
+    </div>;
   }
 
   return (

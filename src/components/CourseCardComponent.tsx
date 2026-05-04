@@ -1,4 +1,3 @@
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { CourseProps } from "@/app/types";
@@ -74,7 +73,7 @@ export default function CourseCardComponent({
             )}
             <small className="text-default-500">
               {course.videos.length}{" "}
-              {course.videos.length == 1 ? "Lesson" : "Lessons"}
+              {course.videos.length == 1 ? "Video Lesson" : "Video Lessons"}
             </small>
             {course.price ? (
               <h4 className="font-bold text-large">
